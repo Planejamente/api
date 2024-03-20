@@ -94,30 +94,25 @@ public class PsicologoController implements IMetodosGenericos<Psicologo> {
         return ResponseEntity.status(200).build();
     }
 
-//    @GetMapping("/ordenado")
-//    public ResponseEntity<Psicologo[]> buscarOrdenado() {
-//        if(psicologos.isEmpty()) return ResponseEntity.status(204).build();
-//
-//        Psicologo[] vetorPsicologo = new Psicologo[psicologos.size()];
-//
-//        for (int i = 0; i < psicologos.size(); i++) {
-//            vetorPsicologo[i] = psicologos.get(i);
-//        }
-//
-//        int indMenor = 0;
-//        for (int i = 0; i < psicologos.size() - 1; i++) {
-//            for (int j = i+1; j < psicologos.size(); j++) {
-//                if(vetorPsicologo[j].getNome().compareTo(vetorPsicologo[indMenor].getNome()) < 0) {
-//                    indMenor = j;
-//                }
-//            }
-//            Psicologo aux = vetorPsicologo[indMenor];
-//            vetorPsicologo[indMenor] = vetorPsicologo[i];
-//            vetorPsicologo[i] = aux;
-//        }
-//
-//        return ResponseEntity.status(200).body(vetorPsicologo);
-//    }
+    @GetMapping("/listar-ordenado")
+    public ResponseEntity<List<Psicologo>> buscarOrdenado() {
+        if(psicologos.isEmpty()) return ResponseEntity.status(204).build();
+
+        int indMenor = 0;
+        for (int i = 0; i < psicologos.size() - 1; i++) {
+            for (int j = i+1; j < psicologos.size(); j++) {
+                if(psicologos.get(i).getNome().compareTo(psicologos.get(j).getNome()) < 0) {
+                    indMenor = j;
+                }
+            }
+            Psicologo aux = psicologos.get(indMenor);
+            psicologos.set(indMenor, psicologos.get(i));
+            psicologos.set(i, aux);
+        }
+
+        return ResponseEntity.status(200).body(psicologos);
+    }
+
     public int buscarNaListaId(UUID id) {
         for (int i = 0; i < psicologos.size(); i++) {
             if(psicologos.get(i).getUuid().equals(id)) return i;
