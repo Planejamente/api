@@ -7,28 +7,28 @@ import java.util.List;
 public class BubbleSortStrategy<T extends Usuario> implements ISortStrategy<T> {
 
     @Override
-    public void sort(List<T> arr) {
-        int n = arr.size();
+    public void sort(List<T> lista) {
+        int n = lista.size();
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
-                if (arr.get(j).getNome().compareToIgnoreCase(arr.get(j + 1).getNome()) < 0) {
-                    T temp = arr.get(j);
-                    arr.set(j, arr.get(j + 1));
-                    arr.set(j + 1, temp);
+                if (lista.get(j).getNome().compareToIgnoreCase(lista.get(j + 1).getNome()) < 0) {
+                    T temp = lista.get(j);
+                    lista.set(j, lista.get(j + 1));
+                    lista.set(j + 1, temp);
                 }
             }
         }
     }
 
     @Override
-    public void sortDescending(List<T> arr) {
-        int n = arr.size();
+    public void sortDecrescente(List<T> lista) {
+        int n = lista.size();
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
-                if (arr.get(j).getNome().compareToIgnoreCase(arr.get(j + 1).getNome()) > 0) {
-                    T temp = arr.get(j);
-                    arr.set(j, arr.get(j + 1));
-                    arr.set(j + 1, temp);
+                if (lista.get(j).getNome().compareToIgnoreCase(lista.get(j + 1).getNome()) > 0) {
+                    T temp = lista.get(j);
+                    lista.set(j, lista.get(j + 1));
+                    lista.set(j + 1, temp);
                 }
             }
         }

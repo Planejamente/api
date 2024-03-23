@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/psicologo")
+@RequestMapping("/psicologos")
 public class PsicologoController implements IMetodosGenericos<Psicologo> {
     List<Psicologo> psicologos = new ArrayList<>();
 
@@ -24,12 +24,10 @@ public class PsicologoController implements IMetodosGenericos<Psicologo> {
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<Psicologo> getPorId(@PathVariable UUID id) {
-        if(buscarNaListaId(id) >= 0) {
-            Psicologo psicologoBuscado = psicologos.get(buscarNaListaId(id));
-            return ResponseEntity.status(200).body(psicologoBuscado);
-        }
+        if(buscarNaListaId(id) < 0) return ResponseEntity.status(404).build();
 
-        return ResponseEntity.status(404).build();
+        Psicologo psicologoBuscado = psicologos.get(buscarNaListaId(id));
+        return ResponseEntity.status(200).body(psicologoBuscado);
     }
 
     @Override
