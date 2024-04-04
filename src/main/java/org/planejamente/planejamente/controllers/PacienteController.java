@@ -13,6 +13,7 @@ import java.util.UUID;
 public class PacienteController implements IMetodosGenericos<Paciente> {
     List<Paciente> pacientes = new ArrayList<>();
 
+
     @Override
     @GetMapping
     public ResponseEntity<List<Paciente>> listar() {

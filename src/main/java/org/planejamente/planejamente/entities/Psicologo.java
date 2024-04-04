@@ -1,6 +1,6 @@
 package org.planejamente.planejamente.entities;
 
-public class Psicologo extends Usuario {
+public class Psicologo extends Usuario  {
     private String crp;
 
     public Psicologo(String nome, String email, String senha, String crp) {
