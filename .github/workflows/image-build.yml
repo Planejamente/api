@@ -26,7 +26,9 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/api:latest ${{ secrets.DOCKERHUB_USERNAME }}/api:{{github.run_number}}
+          tags: |
+          ${{ secrets.DOCKERHUB_USERNAME }}/api:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/api:${{github.run_number}}
   deploy:
     needs: [build]
     runs-on: ubuntu-latest
