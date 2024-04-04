@@ -51,4 +51,5 @@ public class ConsultaController implements IMetodosGenericos<Consulta> {
 
         return -1;
     }
+
 }
