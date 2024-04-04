@@ -1,8 +1,8 @@
 name: API
 on:
   push:
-    branches:
-      - "main"
+    branches: ["main"]
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,3 +27,17 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/api:latest
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    -
+      name: Cluster connect
+      run: echo "Cluster connected"
+    -
+      name: Cluster config
+      run: echo "Cluster configured"
+    -
+      name: Cluster deploy
+      run: echo "Cluster deployed"
+    
