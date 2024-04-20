@@ -1,6 +1,5 @@
-package org.planejamente.planejamente.controllers;
+package org.planejamente.planejamente.controller;
 
-import org.planejamente.planejamente.entities.Psicologo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
