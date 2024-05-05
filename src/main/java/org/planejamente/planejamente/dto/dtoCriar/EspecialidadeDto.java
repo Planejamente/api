@@ -12,6 +12,6 @@ public class EspecialidadeDto {
         @Size(max = 255)
     private String descricao;
     @NotBlank
-        @Size(max = 255)
+        @Size(max = 45)
     private String titulo;
 }

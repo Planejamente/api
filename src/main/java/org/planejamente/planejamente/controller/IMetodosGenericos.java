@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-public interface IMetodosGenericos<T>{
-    public ResponseEntity<List<T>> listar();
-    public ResponseEntity<T> getPorId(UUID id);
-    public ResponseEntity<T> adicionar(T object);
-    public ResponseEntity<T> atualizar(T object, UUID id);
+public interface IMetodosGenericos<consultarT, criarT>{
+    public ResponseEntity<List<consultarT>> listar();
+    public ResponseEntity<consultarT> listarPorId(UUID id);
+    public ResponseEntity<consultarT> criar(criarT dto);
+    public ResponseEntity<consultarT> atualizar(criarT dto, UUID id);
     public ResponseEntity<Void> deletar(UUID id);
 }

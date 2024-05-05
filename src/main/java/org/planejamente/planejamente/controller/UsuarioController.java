@@ -1,15 +1,30 @@
 package org.planejamente.planejamente.controller;
 
-import org.planejamente.planejamente.repository.UsuarioRepository;
-import org.springframework.web.bind.annotation.RequestMapping;
+import jakarta.validation.Valid;
+import org.planejamente.planejamente.dto.AuthenticationDto;
+import org.planejamente.planejamente.infra.security.TokenService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/usuarios")
-public class UsuarioController {
-    private final UsuarioRepository repository;
+public abstract class UsuarioController<dtoCreateT> {
 
-    public UsuarioController(UsuarioRepository repository) {
-        this.repository = repository;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private TokenService tokenService;
+
+    public abstract ResponseEntity register(@RequestBody @Valid dtoCreateT data);
+
+    public AuthenticationManager getAuthenticationManager() {
+        return authenticationManager;
+    }
+
+    public TokenService getTokenService() {
+        return tokenService;
     }
 }

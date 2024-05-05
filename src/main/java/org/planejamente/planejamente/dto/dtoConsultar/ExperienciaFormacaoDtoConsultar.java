@@ -1,21 +1,15 @@
-package org.planejamente.planejamente.entity;
+package org.planejamente.planejamente.dto.dtoConsultar;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.UuidGenerator;
 import org.planejamente.planejamente.entity.usuario.Psicologo;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Entity
-@Table(name = "ExperienciaFormacao")
 @Getter
 @Setter
-public class ExperienciaFormacao {
-    @Id
-        @UuidGenerator
+public class ExperienciaFormacaoDtoConsultar {
     private UUID id;
     private LocalDate dataInicio;
     private LocalDate dataFim;
@@ -24,6 +18,5 @@ public class ExperienciaFormacao {
     private String descricao;
     private String tipo;
     private String titulo;
-    @ManyToOne
     private Psicologo psicologo;
 }

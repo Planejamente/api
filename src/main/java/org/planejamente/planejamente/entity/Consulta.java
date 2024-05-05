@@ -3,9 +3,12 @@ package org.planejamente.planejamente.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UuidGenerator;
+import org.planejamente.planejamente.entity.usuario.Paciente;
+import org.planejamente.planejamente.entity.usuario.Psicologo;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -14,16 +17,18 @@ import java.util.UUID;
 @Setter
 public class Consulta {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+        @UuidGenerator
     private UUID id;
-    private LocalDate dataHoraInicio;
-    private LocalDate dataHoraFim;
-    private String status;
-    private String observacoes;
-    @ManyToOne
-    private Psicologo psicologo;
+    private String avaliacao;
+    private Double nota;
+    private LocalDate dtCriacao;
     @ManyToOne
     private Paciente paciente;
-    @CreationTimestamp
-    private LocalDate dtCriacao;
+    @ManyToOne
+    private Psicologo psicologo;
+    private String linkMeet;
+    private String linkAnamnese;
+    private LocalDateTime inicio;
+    private LocalDateTime fim;
+    private String idAnamnese;
 }

@@ -1,13 +1,12 @@
 package org.planejamente.planejamente.dto.dtoCriar;
 
+
+
 import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.planejamente.planejamente.entity.Psicologo;
+import org.planejamente.planejamente.entity.usuario.Psicologo;
 
 import java.time.LocalDate;
 
@@ -18,7 +17,7 @@ public class ExperienciaFormacaoDto {
         @Past
     private LocalDate dataInicio;
     @NotNull
-        @Past
+        @PastOrPresent
     private LocalDate dataFim;
     @NotBlank
         @Size(max = 255)
@@ -29,13 +28,13 @@ public class ExperienciaFormacaoDto {
     @NotBlank
         @Size(max = 255)
     private String descricao;
-    @ManyToOne
-        @NotNull
-    private Psicologo psicologo;
     @NotBlank
         @Size(max = 255)
     private String tipo;
     @NotBlank
         @Size(max = 255)
     private String titulo;
+    @ManyToOne
+        @NotNull
+    private Psicologo psicologo;
 }

@@ -7,30 +7,37 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.planejamente.planejamente.entity.Paciente;
-import org.planejamente.planejamente.entity.Psicologo;
+import org.hibernate.annotations.CreationTimestamp;
+import org.planejamente.planejamente.entity.usuario.Paciente;
+import org.planejamente.planejamente.entity.usuario.Psicologo;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 public class ConsultaDto {
-    @NotNull
-        @FutureOrPresent
-    private LocalDate dataHoraInicio;
-    @NotNull
-        @FutureOrPresent
-    private LocalDate dataHoraFim;
-    @NotBlank
-        @Size(max = 255)
-    private String status;
-    @NotBlank
-        @Size(max = 255)
-    private String observacoes;
-    @ManyToOne
-        @NotNull
-    private Psicologo psicologo;
+    @CreationTimestamp
+    private LocalDate dtCriacao;
     @ManyToOne
         @NotNull
     private Paciente paciente;
+    @ManyToOne
+        @NotNull
+    private Psicologo psicologo;
+    @NotBlank
+        @Size(max = 255)
+    private String linkMeet;
+    @NotBlank
+        @Size(max = 255)
+    private String linkAnamnese;
+    @NotNull
+        @FutureOrPresent
+    private LocalDateTime inicio;
+    @NotNull
+        @FutureOrPresent
+    private LocalDateTime fim;
+    @NotBlank
+        @Size(max = 255)
+    private String idAnamnese;
 }
