@@ -7,7 +7,7 @@ RUN ls
 
 COPY ./src ./src
 
-RUN mvn clean package -DskipTests
+RUN mvn clean package -e -DskipTests
 RUN ls
 FROM eclipse-temurin:17-jre-alpine
 
