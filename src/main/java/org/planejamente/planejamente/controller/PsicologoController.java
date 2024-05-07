@@ -1,5 +1,6 @@
 package org.planejamente.planejamente.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.planejamente.planejamente.dto.AuthResponseDto;
 import org.planejamente.planejamente.dto.AuthenticationDto;
@@ -21,6 +22,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/psicologos")
+@SecurityRequirement(name = "auth-api")
 public class PsicologoController extends UsuarioController<PsicologoDto> {
     private final PsicologoRepository repository;
     private final UsuarioRepository usuarioRepository;
@@ -46,17 +48,16 @@ public class PsicologoController extends UsuarioController<PsicologoDto> {
         this.repository.save(psicologo);
         return ResponseEntity.status(201).build();
     }
-//
-//    @Override
-//        @GetMapping
-//    public ResponseEntity<List<PsicologoDtoConsultar>> listar() {
-//        List<Psicologo> psicologos = this.repository.findAll();
-//
-//        if(psicologos.isEmpty()) return ResponseEntity.noContent().build();
-//
-//        List<PsicologoDtoConsultar> dto = mapper.toDto(psicologos);
-//        return ResponseEntity.ok(dto);
-//    }
+
+    @GetMapping
+    public ResponseEntity<List<PsicologoDtoConsultar>> listar() {
+        List<Psicologo> psicologos = this.repository.findAll();
+
+        if(psicologos.isEmpty()) return ResponseEntity.noContent().build();
+
+        List<PsicologoDtoConsultar> dto = mapper.toDto(psicologos);
+        return ResponseEntity.ok(dto);
+    }
 //
 //    @Override
 //        @GetMapping("/{id}")
