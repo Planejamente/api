@@ -1,8 +1,10 @@
 package org.planejamente.planejamente.mapper;
 
+import org.planejamente.planejamente.dto.dtoConsultar.ConsultaDtoConsultar;
 import org.planejamente.planejamente.dto.dtoCriar.ConsultaDto;
 import org.planejamente.planejamente.entity.Consulta;
 
+import java.util.List;
 import java.util.Objects;
 
 public class ConsultaMapper {
@@ -20,5 +22,24 @@ public class ConsultaMapper {
         consulta.setIdAnamnese(dto.getIdAnamnese());
 
         return consulta;
+    }
+
+    public static ConsultaDtoConsultar toDto(Consulta consulta) {
+        if(Objects.isNull(consulta)) return null;
+
+        ConsultaDtoConsultar dto = new ConsultaDtoConsultar();
+
+        dto.setId(consulta.getId());
+        dto.setPaciente(consulta.getPaciente());
+        dto.setPsicologo(consulta.getPsicologo());
+        dto.setLinkMeet(consulta.getLinkMeet());
+        dto.setInicio(consulta.getInicio());
+        dto.setFim(consulta.getFim());
+
+        return dto;
+    }
+
+    public static List<ConsultaDtoConsultar> toDto(List<Consulta> consultas) {
+        return consultas.stream().map(ConsultaMapper::toDto).toList();
     }
 }

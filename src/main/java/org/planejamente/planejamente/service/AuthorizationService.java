@@ -1,6 +1,5 @@
 package org.planejamente.planejamente.service;
 
-import org.planejamente.planejamente.repository.PacienteRepository;
 import org.planejamente.planejamente.repository.UsuarioRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -11,6 +11,7 @@ import org.planejamente.planejamente.entity.usuario.Psicologo;
 import org.planejamente.planejamente.mapper.PacienteMapper;
 import org.planejamente.planejamente.repository.PacienteRepository;
 import org.planejamente.planejamente.repository.UsuarioRepository;
+import org.planejamente.planejamente.service.PacienteService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,10 +28,12 @@ public class PacienteController extends UsuarioController<PacienteDto> {
     private final PacienteRepository repository;
     private final UsuarioRepository usuarioRepository;
     private final PacienteMapper mapper;
+    private final PacienteService service;
 
-    public PacienteController(PacienteRepository repository, UsuarioRepository usuarioRepository) {
+    public PacienteController(PacienteRepository repository, UsuarioRepository usuarioRepository, PacienteService service) {
         this.repository = repository;
         this.usuarioRepository = usuarioRepository;
+        this.service = service;
         this.mapper = new PacienteMapper();
     }
 
@@ -49,66 +52,15 @@ public class PacienteController extends UsuarioController<PacienteDto> {
         return ResponseEntity.status(201).build();
     }
 
-//    @Override
-//        @GetMapping
-//    public ResponseEntity<List<PacienteDtoConsultar>> listar() {
-//        List<Paciente> pacientes = this.repository.findAll();
-//
-//        if(pacientes.isEmpty()) return ResponseEntity.noContent().build();
-//
-//        List<PacienteDtoConsultar> dto = mapper.toDto(pacientes);
-//        return ResponseEntity.ok(dto);
-//    }
-//
-//    @Override
-//        @GetMapping("/{id}")
-//    public ResponseEntity<PacienteDtoConsultar> listarPorId(@PathVariable UUID id) {
-//        Paciente paciente = this.repository.findById(id).orElse(null);
-//
-//        if(paciente == null) return ResponseEntity.notFound().build();
-//
-//        PacienteDtoConsultar dto = mapper.toDto(paciente);
-//        return ResponseEntity.ok(dto);
-//    }
-//
-//    @GetMapping("/login/{googleSub}")
-//    public ResponseEntity<PacienteDtoConsultar> loginGoogle(@PathVariable String googleSub) {
-//        Paciente paciente = this.repository.findByGoogleSubEquals(googleSub).orElse(null);
-//
-//        if(paciente == null) return ResponseEntity.notFound().build();
-//
-//        PacienteDtoConsultar dto = mapper.toDto(paciente);
-//        return ResponseEntity.ok(dto);
-//    }
-//
-//    @Override
-//        @PostMapping
-//    public ResponseEntity<PacienteDtoConsultar> criar(@RequestBody @Valid PacienteDto dtoCriacao) {
-//        Paciente paciente = mapper.toEntity(dtoCriacao);
-//
-//        if(Objects.isNull(paciente)) return ResponseEntity.badRequest().build();
-//
-//        Paciente pacienteCadastrado = this.repository.save(paciente);
-//        PacienteDtoConsultar dto = mapper.toDto(pacienteCadastrado);
-//
-//        return ResponseEntity.status(201).body(dto);
-//    }
-//
-//    @Override
-//        @PutMapping("/{id}")
-//    public ResponseEntity<PacienteDtoConsultar> atualizar(@RequestBody @Valid PacienteDto dto,
-//                                                          @PathVariable UUID id) {
-//        return null;
-//    }
-//
-//    @Override
-//        @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deletar(@PathVariable UUID id) {
-//        Paciente paciente = this.repository.findById(id).orElse(null);
-//
-//        if(Objects.isNull(paciente)) return ResponseEntity.notFound().build();
-//
-//        this.repository.delete(paciente);
-//        return ResponseEntity.noContent().build();
-//    }
+    @GetMapping
+    public ResponseEntity<List<PacienteDtoConsultar>> listar() {
+        List<PacienteDtoConsultar> lista = this.service.listarTodos();
+        return lista.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PacienteDtoConsultar> buscarPorId(@PathVariable UUID id) {
+        PacienteDtoConsultar pacienteBuscado = this.service.buscarPorId(id);
+        return Objects.isNull(pacienteBuscado) ? ResponseEntity.notFound().build() : ResponseEntity.ok(pacienteBuscado);
+    }
 }

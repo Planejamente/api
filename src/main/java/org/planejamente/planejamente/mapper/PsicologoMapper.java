@@ -43,7 +43,7 @@ public class PsicologoMapper extends UsuarioMapper<Psicologo, PsicologoDto> {
         return dto;
     }
 
-    public List<PsicologoDtoConsultar> toDto(List<Psicologo> psicologos) {
+    public static List<PsicologoDtoConsultar> toDto(List<Psicologo> psicologos) {
         return psicologos.stream().map(PsicologoMapper::toDto).toList();
     }
 }
