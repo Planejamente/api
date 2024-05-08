@@ -1,5 +1,6 @@
 package org.planejamente.planejamente.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.planejamente.planejamente.dto.AuthResponseDto;
 import org.planejamente.planejamente.dto.AuthenticationDto;
@@ -17,6 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -63,4 +65,15 @@ public class PacienteController extends UsuarioController<PacienteDto> {
         PacienteDtoConsultar pacienteBuscado = this.service.buscarPorId(id);
         return Objects.isNull(pacienteBuscado) ? ResponseEntity.notFound().build() : ResponseEntity.ok(pacienteBuscado);
     }
-}
+
+    @GetMapping("/csv")
+    public ResponseEntity<Void>gerarCsv(){
+        System.out.println("CSVVVVVVVV");
+        this.service.gravaArquivoCsv("pacientes");
+        return ResponseEntity.ok().build();
+
+    }
+
+    }
+
+

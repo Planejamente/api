@@ -35,6 +35,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/pacientes/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/psicologos/**").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/pacientes/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/pacientes/csv").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
