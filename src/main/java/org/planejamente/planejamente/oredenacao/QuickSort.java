@@ -1,7 +1,7 @@
 package org.planejamente.planejamente.oredenacao;
 
 
-import org.planejamente.planejamente.entity.Psicologo;
+import org.planejamente.planejamente.entity.usuario.Psicologo;
 
 import java.util.List;
 
