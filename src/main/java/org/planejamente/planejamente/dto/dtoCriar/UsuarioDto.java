@@ -19,8 +19,7 @@ public abstract class UsuarioDto {
     @NotNull
         @Past
     private LocalDate dataDeNascimento;
-    @NotBlank
-        @Size(max = 11)
+    @Size(max = 11)
     private String telefone;
     @NotBlank
         @Size(max = 9)
