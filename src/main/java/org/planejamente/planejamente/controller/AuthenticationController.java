@@ -45,9 +45,9 @@ public class AuthenticationController {
         return ResponseEntity.ok(new AuthResponseDto(token));
     }
 
-    @GetMapping("/user-type")
-    public ResponseEntity<String> buscarTipoUsuario(@RequestBody UserTypeDto userType) {
-        Usuario usuario = this.repository.findFirstByEmail(userType.getEmail());
+    @GetMapping("/user-type/{email}")
+    public ResponseEntity<String> buscarTipoUsuario(@PathVariable String email) {
+        Usuario usuario = this.repository.findFirstByEmail(email);
         if(Objects.isNull(usuario)) return ResponseEntity.notFound().build();
 
         String role = usuario.getRole().getRole();
