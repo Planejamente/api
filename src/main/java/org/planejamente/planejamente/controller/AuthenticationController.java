@@ -3,6 +3,7 @@ package org.planejamente.planejamente.controller;
 import jakarta.validation.Valid;
 import org.planejamente.planejamente.dto.AuthResponseDto;
 import org.planejamente.planejamente.dto.AuthenticationDto;
+import org.planejamente.planejamente.dto.UserTypeDto;
 import org.planejamente.planejamente.entity.usuario.Usuario;
 import org.planejamente.planejamente.entity.usuario.UsuarioRole;
 import org.planejamente.planejamente.infra.security.TokenService;
@@ -45,8 +46,8 @@ public class AuthenticationController {
     }
 
     @GetMapping("/user-type")
-    public ResponseEntity<String> buscarTipoUsuario(@RequestParam String email) {
-        Usuario usuario = this.repository.findFirstByEmail(email);
+    public ResponseEntity<String> buscarTipoUsuario(@RequestBody UserTypeDto userType) {
+        Usuario usuario = this.repository.findFirstByEmail(userType.getEmail());
         if(Objects.isNull(usuario)) return ResponseEntity.notFound().build();
 
         String role = usuario.getRole().getRole();
