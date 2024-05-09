@@ -3,6 +3,7 @@ package org.planejamente.planejamente.service;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoConsultar;
 import org.planejamente.planejamente.entity.usuario.Psicologo;
 import org.planejamente.planejamente.mapper.PsicologoMapper;
+import org.planejamente.planejamente.oredenacao.QuickSort;
 import org.planejamente.planejamente.repository.PsicologoRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,12 @@ public class PsicologoService {
     public List<PsicologoDtoConsultar> listarPorGenero(String genero) {
         String generoLower = genero.toLowerCase();
         List<Psicologo> todos = this.repository.findByGenero(generoLower);
+        return PsicologoMapper.toDto(todos);
+    }
+
+    public List<PsicologoDtoConsultar> listarOrdenado() {
+        List<Psicologo> todos = this.repository.findAll();
+        QuickSort.ordenarQuickSort(todos);
         return PsicologoMapper.toDto(todos);
     }
 }

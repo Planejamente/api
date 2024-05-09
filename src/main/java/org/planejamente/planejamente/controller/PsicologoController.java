@@ -66,4 +66,10 @@ public class PsicologoController extends UsuarioController<PsicologoDto> {
         List<PsicologoDtoConsultar> lista = this.service.listarPorGenero(genero);
         return lista.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(lista);
     }
+
+    @GetMapping("/ordenado")
+    public ResponseEntity<List<PsicologoDtoConsultar>> listarOrdenado() {
+        List<PsicologoDtoConsultar> listaOrdenada = this.service.listarOrdenado();
+        return listaOrdenada.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(listaOrdenada);
+    }
 }
