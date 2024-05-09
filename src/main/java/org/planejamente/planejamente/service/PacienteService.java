@@ -40,8 +40,6 @@ public class PacienteService {
         PrintWriter saida = null;
         Boolean deuRuim = false;
 
-        nomeArq += ".csv";
-
         try {
             arq = new FileWriter(nomeArq);
             saida = new PrintWriter(arq);
