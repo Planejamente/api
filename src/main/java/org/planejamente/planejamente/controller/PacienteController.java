@@ -86,10 +86,6 @@ public class PacienteController extends UsuarioController<PacienteDto> {
 
         return new ResponseEntity<>(new FileSystemResource(file), headers, HttpStatus.OK);
     }
-
-    //Endpoint de dowload do arquivo CSV
-
-
-    }
+}
 
 

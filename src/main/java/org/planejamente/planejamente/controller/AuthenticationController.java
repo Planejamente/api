@@ -8,6 +8,7 @@ import org.planejamente.planejamente.entity.usuario.UsuarioRole;
 import org.planejamente.planejamente.infra.security.TokenService;
 import org.planejamente.planejamente.mapper.PacienteMapper;
 import org.planejamente.planejamente.repository.UsuarioRepository;
+import org.planejamente.planejamente.service.PsicologoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,12 +25,14 @@ public class AuthenticationController {
     private final UsuarioRepository repository;
     private final PacienteMapper pacienteMapper;
     private final TokenService tokenService;
+    private final PsicologoService psicologoService;
 
-    public AuthenticationController(AuthenticationManager authenticationManager, UsuarioRepository repository, TokenService tokenService) {
+    public AuthenticationController(AuthenticationManager authenticationManager, UsuarioRepository repository, TokenService tokenService, PsicologoService psicologoService) {
         this.authenticationManager = authenticationManager;
         this.repository = repository;
         this.tokenService = tokenService;
         this.pacienteMapper = new PacienteMapper();
+        this.psicologoService = psicologoService;
     }
 
     @PostMapping("/login")
@@ -51,5 +54,11 @@ public class AuthenticationController {
 
         String tipoUsuario = role.equalsIgnoreCase("ADMIN") ? "psicologo" : "paciente";
         return ResponseEntity.ok(tipoUsuario);
+    }
+
+    @GetMapping("/crp")
+    public ResponseEntity<Boolean> buscarPorCrp(@RequestParam String crp) {
+        Boolean exists = this.psicologoService.buscarPorCrp(crp);
+        return ResponseEntity.ok(exists);
     }
 }

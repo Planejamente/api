@@ -7,6 +7,7 @@ import org.planejamente.planejamente.oredenacao.QuickSort;
 import org.planejamente.planejamente.repository.PsicologoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,5 +39,13 @@ public class PsicologoService {
         List<Psicologo> todos = this.repository.findAll();
         QuickSort.ordenarQuickSort(todos);
         return PsicologoMapper.toDto(todos);
+    }
+
+    public Boolean buscarPorCrp(String crp) {
+        String[] lista = {"123456789", "987654321"};
+        for (String s : lista) {
+            if(crp.equals(s)) return true;
+        }
+        return false;
     }
 }

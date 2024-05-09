@@ -32,6 +32,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/v3/api-docs/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/auth/user-type").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/auth/crp").permitAll()
                         .requestMatchers(HttpMethod.POST, "/psicologos/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/pacientes/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/psicologos/**").hasRole("ADMIN")
