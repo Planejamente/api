@@ -32,6 +32,7 @@ import java.util.UUID;
 @SecurityRequirement(name = "auth-api")
 @RestController
 @RequestMapping("/pacientes")
+@CrossOrigin
 public class PacienteController extends UsuarioController<PacienteDto> {
 
     private final PacienteRepository repository;

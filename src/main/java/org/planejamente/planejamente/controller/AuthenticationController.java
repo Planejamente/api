@@ -17,6 +17,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;

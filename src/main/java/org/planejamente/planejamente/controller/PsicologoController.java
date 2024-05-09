@@ -20,6 +20,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/psicologos")
 @SecurityRequirement(name = "auth-api")
+@CrossOrigin
 public class PsicologoController extends UsuarioController<PsicologoDto> {
     private final PsicologoRepository repository;
     private final UsuarioRepository usuarioRepository;
