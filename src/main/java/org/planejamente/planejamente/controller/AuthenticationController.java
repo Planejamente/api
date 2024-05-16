@@ -9,6 +9,8 @@ import org.planejamente.planejamente.entity.usuario.UsuarioRole;
 import org.planejamente.planejamente.infra.security.TokenService;
 import org.planejamente.planejamente.mapper.PacienteMapper;
 import org.planejamente.planejamente.repository.UsuarioRepository;
+import org.planejamente.planejamente.service.AuthenticationService;
+import org.planejamente.planejamente.service.AuthorizationService;
 import org.planejamente.planejamente.service.PsicologoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,27 +24,23 @@ import java.util.Objects;
 @CrossOrigin
 public class AuthenticationController {
 
-    private final AuthenticationManager authenticationManager;
+
     private final UsuarioRepository repository;
+    private final AuthenticationService service;
     private final PacienteMapper pacienteMapper;
-    private final TokenService tokenService;
     private final PsicologoService psicologoService;
 
-    public AuthenticationController(AuthenticationManager authenticationManager, UsuarioRepository repository, TokenService tokenService, PsicologoService psicologoService) {
-        this.authenticationManager = authenticationManager;
+    public AuthenticationController(UsuarioRepository repository, AuthenticationService service, PsicologoService psicologoService) {
         this.repository = repository;
-        this.tokenService = tokenService;
+        this.service = service;
         this.pacienteMapper = new PacienteMapper();
         this.psicologoService = psicologoService;
     }
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDto data) {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.googleSub());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
-
-        var token = tokenService.generateToken((Usuario) auth.getPrincipal());
-        return ResponseEntity.ok(new AuthResponseDto(token));
+        AuthResponseDto dto = this.service.login(data);
+        return dto.token().isBlank() ? ResponseEntity.badRequest().build() : ResponseEntity.ok(dto);
     }
 
     @GetMapping("/user-type/{email}")
