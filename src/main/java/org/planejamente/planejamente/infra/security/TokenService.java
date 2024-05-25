@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class TokenService {
@@ -18,13 +20,16 @@ public class TokenService {
     @Value("$api.security.token.secret")
     private String secret;
 
-    public String generateToken(Usuario usuario) {
+    public String generateToken(Usuario usuario, String tipoUsuario) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("tipoUsuario", tipoUsuario);
             String token = JWT.create()
                     .withIssuer("auth-api")
                     .withSubject(usuario.getEmail())
                     .withExpiresAt(genExpirationDate())
+                    .withClaim("tipoUsuario", tipoUsuario)
                     .sign(algorithm);
             return token;
         } catch (JWTCreationException exception) {
@@ -40,6 +45,19 @@ public class TokenService {
                     .build()
                     .verify(token)
                     .getSubject();
+        } catch (JWTVerificationException exception) {
+            return "";
+        }
+    }
+
+    public String extractUserType(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm)
+                    .withIssuer("auth-api")
+                    .build()
+                    .verify(token)
+                    .getClaim("tipoUsuario").asString();
         } catch (JWTVerificationException exception) {
             return "";
         }

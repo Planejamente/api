@@ -43,18 +43,6 @@ public class AuthenticationController {
         return dto.token().isBlank() ? ResponseEntity.badRequest().build() : ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/user-type/{email}")
-    public ResponseEntity<String> buscarTipoUsuario(@PathVariable String email) {
-        Usuario usuario = this.repository.findFirstByEmail(email);
-        if(Objects.isNull(usuario)) return ResponseEntity.notFound().build();
-
-        String role = usuario.getRole().getRole();
-        if(role.isBlank()) return ResponseEntity.internalServerError().build();
-
-        String tipoUsuario = role.equalsIgnoreCase("ADMIN") ? "psicologo" : "paciente";
-        return ResponseEntity.ok(tipoUsuario);
-    }
-
     @GetMapping("/crp")
     public ResponseEntity<Boolean> buscarPorCrp(@RequestParam String crp) {
         Boolean exists = this.psicologoService.buscarPorCrp(crp);
