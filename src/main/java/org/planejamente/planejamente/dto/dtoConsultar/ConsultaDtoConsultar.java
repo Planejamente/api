@@ -1,5 +1,6 @@
 package org.planejamente.planejamente.dto.dtoConsultar;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.planejamente.planejamente.entity.usuario.Paciente;
@@ -12,9 +13,27 @@ import java.util.UUID;
 @Setter
 public class ConsultaDtoConsultar {
     private UUID id;
-    private Paciente paciente;
-    private Psicologo psicologo;
+    private ConsultaDtoConsultar.PacienteDtoConsultar paciente;
+    private ConsultaDtoConsultar.PsicologoDtoConsultar psicologo;
     private String linkMeet;
     private LocalDateTime inicio;
     private LocalDateTime fim;
+
+    @Data
+    public static class PacienteDtoConsultar {
+        private UUID id;
+        private String nome;
+        private String telefone;
+        private String genero;
+        private String email;
+    }
+
+    @Data
+    public static class PsicologoDtoConsultar {
+        private UUID id;
+        private String nome;
+        private String telefone;
+        private String genero;
+        private String email;
+    }
 }

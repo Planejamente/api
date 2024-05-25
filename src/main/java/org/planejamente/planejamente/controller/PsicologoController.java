@@ -2,6 +2,7 @@ package org.planejamente.planejamente.controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
+import org.planejamente.planejamente.dto.dtoConsultar.ConsultaDtoConsultar;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoConsultar;
 import org.planejamente.planejamente.dto.dtoCriar.PsicologoDto;
 import org.planejamente.planejamente.entity.usuario.Psicologo;
@@ -57,8 +58,9 @@ public class PsicologoController extends UsuarioController<PsicologoDto> {
 
     @GetMapping("/{id}")
     public ResponseEntity<PsicologoDtoConsultar> buscarPorId(@PathVariable UUID id) {
-        PsicologoDtoConsultar psicologoBuscado = this.service.buscarPorId(id);
-        return Objects.isNull(psicologoBuscado) ? ResponseEntity.notFound().build() : ResponseEntity.ok(psicologoBuscado);
+        Psicologo psicologoBuscado = this.service.buscarPorId(id);
+        PsicologoDtoConsultar dto = PsicologoMapper.toDto(psicologoBuscado);
+        return Objects.isNull(psicologoBuscado) ? ResponseEntity.notFound().build() : ResponseEntity.ok(dto);
     }
 
     @GetMapping("/filtro-genero/{genero}")

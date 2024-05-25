@@ -5,7 +5,9 @@ import org.planejamente.planejamente.entity.usuario.Psicologo;
 import org.planejamente.planejamente.mapper.PsicologoMapper;
 import org.planejamente.planejamente.oredenacao.QuickSort;
 import org.planejamente.planejamente.repository.PsicologoRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +26,9 @@ public class PsicologoService {
         return PsicologoMapper.toDto(todos);
     }
 
-    public PsicologoDtoConsultar buscarPorId(UUID id) {
-        Psicologo psicologoBuscado = this.repository.findById(id).orElse(null);
-        return PsicologoMapper.toDto(psicologoBuscado);
+    public Psicologo buscarPorId(UUID id) {
+        return this.repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Psicologo não encontrado"));
     }
 
     public List<PsicologoDtoConsultar> listarPorGenero(String genero) {

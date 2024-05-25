@@ -13,18 +13,17 @@ import org.planejamente.planejamente.entity.usuario.Psicologo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
 public class ConsultaDto {
     @CreationTimestamp
-    private LocalDate dtCriacao;
-    @ManyToOne
-        @NotNull
-    private Paciente paciente;
-    @ManyToOne
-        @NotNull
-    private Psicologo psicologo;
+    private LocalDateTime dtCriacao;
+    @NotBlank
+    private UUID idPsicologo;
+    @NotBlank
+    private UUID idPaciente;
     @NotBlank
         @Size(max = 255)
     private String linkMeet;

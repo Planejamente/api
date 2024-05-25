@@ -7,7 +7,6 @@ import org.hibernate.annotations.UuidGenerator;
 import org.planejamente.planejamente.entity.usuario.Paciente;
 import org.planejamente.planejamente.entity.usuario.Psicologo;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -21,7 +20,7 @@ public class Consulta {
     private UUID id;
     private String avaliacao;
     private Double nota;
-    private LocalDate dtCriacao;
+    private LocalDateTime dtCriacao;
     @ManyToOne
     private Paciente paciente;
     @ManyToOne
