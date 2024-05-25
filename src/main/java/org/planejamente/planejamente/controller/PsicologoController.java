@@ -38,15 +38,7 @@ public class PsicologoController extends UsuarioController<PsicologoDto> {
     @Override
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid PsicologoDto data) {
-        var u = this.usuarioRepository.findByEmail(data.getEmail());
-        if(u != null) return ResponseEntity.status(409).build();
-
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.getGoogleSub());
-
-        Psicologo psicologo = mapper.toEntity(data);
-        psicologo.setGoogleSub(encryptedPassword);
-
-        this.repository.save(psicologo);
+        this.service.salvar(data);
         return ResponseEntity.status(201).build();
     }
 
@@ -60,7 +52,7 @@ public class PsicologoController extends UsuarioController<PsicologoDto> {
     public ResponseEntity<PsicologoDtoConsultar> buscarPorId(@PathVariable UUID id) {
         Psicologo psicologoBuscado = this.service.buscarPorId(id);
         PsicologoDtoConsultar dto = PsicologoMapper.toDto(psicologoBuscado);
-        return Objects.isNull(psicologoBuscado) ? ResponseEntity.notFound().build() : ResponseEntity.ok(dto);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/filtro-genero/{genero}")
