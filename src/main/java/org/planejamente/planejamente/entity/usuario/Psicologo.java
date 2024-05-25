@@ -17,4 +17,6 @@ public class Psicologo extends Usuario {
     private String linkAnamnese;
     private String idAnamnese;
     private String linkFotoDeFundo;
+    private String descricao;
+    private String headline;
 }
