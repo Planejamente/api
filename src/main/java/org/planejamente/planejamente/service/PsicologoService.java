@@ -50,4 +50,22 @@ public class PsicologoService {
         }
         return false;
     }
+
+    public List<List<PsicologoDtoConsultar>> listarEmMatriz(int colunas) {
+        List<PsicologoDtoConsultar> todosPsicologos = listarTodos();
+        List<List<PsicologoDtoConsultar>> matriz = new ArrayList<>();
+        int linhaAtual = 0;
+
+        for (int i = 0; i < todosPsicologos.size(); i++) {
+            if (i % colunas == 0) {
+                matriz.add(new ArrayList<>());
+                linhaAtual++;
+            }
+            matriz.get(linhaAtual - 1).add(todosPsicologos.get(i));
+        }
+
+        return matriz;
+    }
+
+
 }
