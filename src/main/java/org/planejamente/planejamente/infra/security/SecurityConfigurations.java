@@ -38,6 +38,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/pacientes/**").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/pacientes/csv").permitAll()
                         .requestMatchers(HttpMethod.POST, "/consultas").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/hello-bro").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
