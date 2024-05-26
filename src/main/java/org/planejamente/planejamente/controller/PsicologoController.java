@@ -2,7 +2,6 @@ package org.planejamente.planejamente.controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
-import org.planejamente.planejamente.dto.dtoConsultar.ConsultaDtoConsultar;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoConsultar;
 import org.planejamente.planejamente.dto.dtoCriar.PsicologoDto;
 import org.planejamente.planejamente.entity.usuario.Psicologo;
@@ -11,11 +10,9 @@ import org.planejamente.planejamente.repository.PsicologoRepository;
 import org.planejamente.planejamente.repository.UsuarioRepository;
 import org.planejamente.planejamente.service.PsicologoService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @RestController
