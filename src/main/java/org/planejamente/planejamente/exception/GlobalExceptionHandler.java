@@ -1,5 +1,6 @@
 package org.planejamente.planejamente.exception;
 
+import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import jakarta.xml.bind.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,5 +23,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity handleAuthenticationException(AuthenticationException ex) {
         return ResponseEntity.status(401).build();
+    }
+
+    @ExceptionHandler(GoogleJsonResponseException.class)
+    public ResponseEntity handleGoogleJsonResponseException(GoogleJsonResponseException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
     }
 }
