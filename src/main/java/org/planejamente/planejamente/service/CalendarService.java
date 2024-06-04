@@ -7,7 +7,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.calendar.Calendar;
-import com.google.api.services.calendar.model.CalendarListEntry;
+import com.google.api.services.calendar.model.*;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -31,10 +31,10 @@ public class CalendarService {
 
             Calendar service = new Calendar.Builder(httpTransport, JSON_FACTORY, credentials).build();
 
-            String CreateCalendar = createCalendar(service, "Horário de trabalho");
-            String createCalendar2 =  createCalendar(service, "Consultas");
+            String createCalendar1 = createCalendar(service, "Horário de trabalho");
+            String createCalendar2 = createCalendar(service, "Consultas");
 
-           return new AuthCalendarId(CreateCalendar, createCalendar2);
+            return new AuthCalendarId(createCalendar1, createCalendar2);
 
         } catch (IOException | GeneralSecurityException e) {
             logger.log(Level.SEVERE, "Erro ao criar calendário", e);
@@ -48,14 +48,39 @@ public class CalendarService {
 
         com.google.api.services.calendar.model.Calendar createdCalendar = service.calendars().insert(calendar).execute();
 
-
+        // Configurar regras de ACL
         com.google.api.services.calendar.model.AclRule rule = new com.google.api.services.calendar.model.AclRule();
         com.google.api.services.calendar.model.AclRule.Scope scope = new com.google.api.services.calendar.model.AclRule.Scope();
         scope.setType("user").setValue("servicosplanejamente@gmail.com");
         rule.setScope(scope).setRole("owner");
         service.acl().insert(createdCalendar.getId(), rule).execute();
 
+        // Criar um evento com um link do Google Meet
+        createEventWithMeetLink(service, createdCalendar.getId(), summary);
+
         return createdCalendar.getId();
     }
 
+    private void createEventWithMeetLink(Calendar service, String calendarId, String summary) throws IOException {
+        Event event = new Event()
+                .setSummary(summary)
+                .setDescription("Este é um evento de exemplo com link do Google Meet")
+                .setStart(new EventDateTime()
+                        .setDateTime(new com.google.api.client.util.DateTime("2024-06-05T10:00:00-07:00"))
+                        .setTimeZone("America/Los_Angeles"))
+                .setEnd(new EventDateTime()
+                        .setDateTime(new com.google.api.client.util.DateTime("2024-06-05T11:00:00-07:00"))
+                        .setTimeZone("America/Los_Angeles"))
+                .setConferenceData(new ConferenceData()
+                        .setCreateRequest(new CreateConferenceRequest()
+                                .setRequestId("sample123")
+                                .setConferenceSolutionKey(new ConferenceSolutionKey()
+                                        .setType("hangoutsMeet"))));
+
+        Event createdEvent = service.events().insert(calendarId, event)
+                .setConferenceDataVersion(1)
+                .execute();
+
+        logger.info("Evento criado: " + createdEvent.getHtmlLink());
+    }
 }

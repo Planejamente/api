@@ -22,7 +22,6 @@ public class CalendarController {
                 return ResponseEntity.badRequest().body("O token de acesso não pode estar vazio.");
             }
 
-
             AuthCalendarId dto = calendarService.createCalendars(accessToken.accessToken());
 
             return ResponseEntity.ok(dto);
@@ -34,5 +33,4 @@ public class CalendarController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno do servidor: " + e.getMessage());
         }
     }
-
 }
