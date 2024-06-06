@@ -14,7 +14,6 @@ public class CalendarController {
 
     @Autowired
     private CalendarService calendarService;
-
     @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody AuthCalendar accessToken) {
         try {
@@ -33,4 +32,5 @@ public class CalendarController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno do servidor: " + e.getMessage());
         }
     }
+
 }

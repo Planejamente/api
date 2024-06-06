@@ -1,10 +1,13 @@
 package org.planejamente.planejamente.service;
 
+import org.planejamente.planejamente.dto.PsicologosDisponiveisDto;
+import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoConsultar;
 import org.planejamente.planejamente.dto.dtoCriar.ConsultaDto;
 import org.planejamente.planejamente.entity.Consulta;
 import org.planejamente.planejamente.entity.usuario.Paciente;
 import org.planejamente.planejamente.entity.usuario.Psicologo;
 import org.planejamente.planejamente.mapper.ConsultaMapper;
+import org.planejamente.planejamente.mapper.PsicologoMapper;
 import org.planejamente.planejamente.repository.ConsultaRepository;
 import org.planejamente.planejamente.repository.PacienteRepository;
 import org.planejamente.planejamente.repository.PsicologoRepository;
@@ -13,8 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ConsultaService {
@@ -60,4 +65,11 @@ public class ConsultaService {
 
         return this.consultaRepository.save(consulta);
     }
+
+    public List<PsicologoDtoConsultar> buscarTodos(PsicologosDisponiveisDto dto) {
+        return this.psicologoRepository.findAll().stream()
+                .map(PsicologoMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
 }

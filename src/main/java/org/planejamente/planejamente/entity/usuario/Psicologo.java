@@ -12,7 +12,7 @@ public class Psicologo extends Usuario {
     private String cnpj;
     private String cpf;
     private String linkFotoPerfil;
-    private String idCalendarioDisponivel;
+    private String idCalendarioHorarioDeTrabalho;
     private String idCalendarioConsulta;
     private String linkAnamnese;
     private String idAnamnese;
