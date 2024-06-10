@@ -96,4 +96,18 @@ public class PsicologoService {
 
         this.repository.save(psicologo);
     }
+
+    public void salvaFotoDePerfil(String linkFotoPerfil, UUID id) {
+        Psicologo psicologo = this.repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Psicologo não encontrado"));
+        psicologo.setLinkFotoPerfil(linkFotoPerfil);
+        this.repository.save(psicologo);
+    }
+
+    public void salvaFotoDeFundo(String linkFotoPerfil, UUID id) {
+        Psicologo psicologo = this.repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Psicologo não encontrado"));
+        psicologo.setLinkFotoDeFundo(linkFotoPerfil);
+        this.repository.save(psicologo);
+    }
 }

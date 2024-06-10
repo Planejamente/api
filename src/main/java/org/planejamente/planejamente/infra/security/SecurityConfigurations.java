@@ -40,6 +40,8 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/calendario/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/consultas").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/hello-bro").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/blob/foto-de-usuario").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST,"/blob/foto-de-fundo").hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
