@@ -9,6 +9,7 @@ import org.planejamente.planejamente.dto.dtoCriar.ConsultaDto;
 import org.planejamente.planejamente.entity.Consulta;
 import org.planejamente.planejamente.mapper.ConsultaMapper;
 import org.planejamente.planejamente.service.ConsultaService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,10 +36,15 @@ public class ConsultaController {
     @PostMapping
     public ResponseEntity<ConsultaDtoConsultar> criar(@RequestBody @Valid ConsultaDto consultaDto) {
         System.out.println(consultaDto);
-        Consulta consultaSalva = this.service.criar(consultaDto);
+
+        String accessToken = consultaDto.getAccessToken();
+        String calendarId = consultaDto.getCalendarId();
+
+        Consulta consultaSalva = this.service.criar(consultaDto, accessToken, calendarId);
+
         ConsultaDtoConsultar dto = ConsultaMapper.toDto(consultaSalva);
 
-        return ResponseEntity.status(201).body(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
     @GetMapping

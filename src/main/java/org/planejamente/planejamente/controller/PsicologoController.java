@@ -69,10 +69,5 @@ public class PsicologoController extends UsuarioController<PsicologoDto> {
         return listaOrdenada.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(listaOrdenada);
     }
 
-    @GetMapping("/matriz/{colunas}")
-    public ResponseEntity<List<List<PsicologoDtoConsultar>>> listarEmMatriz(@PathVariable int colunas) {
-        List<List<PsicologoDtoConsultar>> matriz = this.service.listarEmMatriz(colunas);
-        return matriz.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(matriz);
-    }
 
 }
