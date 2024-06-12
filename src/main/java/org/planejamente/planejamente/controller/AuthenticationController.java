@@ -1,39 +1,25 @@
 package org.planejamente.planejamente.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.planejamente.planejamente.dto.AuthResponseDto;
 import org.planejamente.planejamente.dto.AuthenticationDto;
-import org.planejamente.planejamente.dto.UserTypeDto;
-import org.planejamente.planejamente.entity.usuario.Usuario;
-import org.planejamente.planejamente.entity.usuario.UsuarioRole;
-import org.planejamente.planejamente.infra.security.TokenService;
-import org.planejamente.planejamente.mapper.PacienteMapper;
-import org.planejamente.planejamente.repository.UsuarioRepository;
 import org.planejamente.planejamente.service.AuthenticationService;
-import org.planejamente.planejamente.service.AuthorizationService;
 import org.planejamente.planejamente.service.PsicologoService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin
+@SecurityRequirement(name = "auth-api")
 public class AuthenticationController {
 
-
-    private final UsuarioRepository repository;
     private final AuthenticationService service;
-    private final PacienteMapper pacienteMapper;
     private final PsicologoService psicologoService;
 
-    public AuthenticationController(UsuarioRepository repository, AuthenticationService service, PsicologoService psicologoService) {
-        this.repository = repository;
+    public AuthenticationController(AuthenticationService service, PsicologoService psicologoService) {
         this.service = service;
-        this.pacienteMapper = new PacienteMapper();
         this.psicologoService = psicologoService;
     }
 

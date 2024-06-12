@@ -11,4 +11,7 @@ import java.util.UUID;
 public interface ConsultaRepository extends JpaRepository<Consulta, UUID> {
     Boolean existsByPsicologoIdAndInicioBetween(UUID id, LocalDateTime inicio, LocalDateTime fim);
     Boolean existsByPsicologoIdAndFimBetween(UUID id, LocalDateTime inicio, LocalDateTime fim);
+    Integer countConsultaByPsicologoId(UUID idPsicologo);
+    List<Consulta> findAllByPsicologoIdAndFimBefore(UUID idPsicologo, LocalDateTime data);
+    Integer countConsultaByPsicologoIdAndFimBefore(UUID idPsicologo, LocalDateTime data);
 }

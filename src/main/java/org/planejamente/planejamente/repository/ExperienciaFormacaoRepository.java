@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ExperienciaFormacaoRepository extends JpaRepository<ExperienciaFormacao, UUID> {
-    List<ExperienciaFormacao> findByPsicologo_IdEquals(UUID id);
+    List<ExperienciaFormacao> findByPsicologoId(UUID idPsicologo);
 }

@@ -49,7 +49,7 @@ public class PacienteController extends UsuarioController<PacienteDto> {
 
     @Override
     @PostMapping("/register")
-    public ResponseEntity register(PacienteDto data) {
+    public ResponseEntity register(@RequestBody @Valid PacienteDto data) {
         var u = this.usuarioRepository.findByEmail(data.getEmail());
         if(u != null) return ResponseEntity.status(409).build();
 

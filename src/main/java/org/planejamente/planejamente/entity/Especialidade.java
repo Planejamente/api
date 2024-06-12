@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
+import org.planejamente.planejamente.entity.usuario.Psicologo;
 
 import java.util.UUID;
 
@@ -17,4 +18,6 @@ public class Especialidade {
     private UUID id;
     private String descricao;
     private String titulo;
+    @ManyToOne
+    private Psicologo psicologo;
 }

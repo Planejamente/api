@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.planejamente.planejamente.controller.PsicologoController;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoConsultar;
+import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoExibir;
 import org.planejamente.planejamente.entity.usuario.Psicologo;
 import org.planejamente.planejamente.service.PsicologoService;
 import org.springframework.http.HttpStatus;
@@ -55,10 +56,10 @@ import static org.mockito.Mockito.when;
             Psicologo psicologoRetornado = new Psicologo();
 
 
-            when(psicologoService.buscarPorId(id)).thenReturn(psicologoRetornado);
+//            when(psicologoService.buscarPorId(id)).thenReturn(psicologoRetornado)
 
 
-            ResponseEntity<PsicologoDtoConsultar> response = psicologoController.buscarPorId(id);
+            ResponseEntity<PsicologoDtoExibir> response = psicologoController.buscarPorId(id);
 
 
             assertEquals(HttpStatus.OK, response.getStatusCode());
