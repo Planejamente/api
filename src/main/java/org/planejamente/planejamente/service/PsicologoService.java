@@ -39,7 +39,7 @@ public class PsicologoService {
 
     public PsicologoService(PsicologoRepository repository, UsuarioRepository usuarioRepository,
                             EspecialidadeRepository especialidadeRepository, ExperienciaFormacaoRepository expFormRepository,
-                            EnderecoRepository enderecoRepository, ConsultaRepository consultaRepository) {
+                            EnderecoRepository enderecoRepository, ConsultaRepository consultaRepository, CalendarService calendarService) {
         this.repository = repository;
         this.usuarioRepository = usuarioRepository;
         this.especialidadeRepository = especialidadeRepository;
