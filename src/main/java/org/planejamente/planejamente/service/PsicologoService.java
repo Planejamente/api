@@ -1,12 +1,16 @@
 package org.planejamente.planejamente.service;
 
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoConsultar;
+import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoExibir;
 import org.planejamente.planejamente.dto.dtoCriar.PsicologoDto;
+import org.planejamente.planejamente.entity.Consulta;
+import org.planejamente.planejamente.entity.Endereco;
+import org.planejamente.planejamente.entity.Especialidade;
+import org.planejamente.planejamente.entity.ExperienciaFormacao;
 import org.planejamente.planejamente.entity.usuario.Psicologo;
 import org.planejamente.planejamente.mapper.PsicologoMapper;
 import org.planejamente.planejamente.oredenacao.QuickSort;
-import org.planejamente.planejamente.repository.PsicologoRepository;
-import org.planejamente.planejamente.repository.UsuarioRepository;
+import org.planejamente.planejamente.repository.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
@@ -14,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -23,10 +28,20 @@ public class PsicologoService {
     private final PsicologoRepository repository;
     private final UsuarioRepository usuarioRepository;
     private final PsicologoMapper mapper;
+    private final EspecialidadeRepository especialidadeRepository;
+    private final ExperienciaFormacaoRepository expFormRepository;
+    private final EnderecoRepository enderecoRepository;
+    private final ConsultaRepository consultaRepository;
 
-    public PsicologoService(PsicologoRepository repository, UsuarioRepository usuarioRepository) {
+    public PsicologoService(PsicologoRepository repository, UsuarioRepository usuarioRepository,
+                            EspecialidadeRepository especialidadeRepository, ExperienciaFormacaoRepository expFormRepository,
+                            EnderecoRepository enderecoRepository, ConsultaRepository consultaRepository) {
         this.repository = repository;
         this.usuarioRepository = usuarioRepository;
+        this.especialidadeRepository = especialidadeRepository;
+        this.expFormRepository = expFormRepository;
+        this.enderecoRepository = enderecoRepository;
+        this.consultaRepository = consultaRepository;
         this.mapper = new PsicologoMapper();
     }
 
@@ -35,9 +50,35 @@ public class PsicologoService {
         return PsicologoMapper.toDto(todos);
     }
 
-    public Psicologo buscarPorId(UUID id) {
-        return this.repository.findById(id)
+    public PsicologoDtoExibir buscarPorId(UUID id) {
+        Psicologo psi = this.repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Psicologo não encontrado"));
+
+        List<Especialidade> especialidades = this.especialidadeRepository.findAllByPsicologoId(psi.getId());
+        psi.setEspecialidades(especialidades);
+
+        List<ExperienciaFormacao> expForm = this.expFormRepository.findByPsicologoId(psi.getId());
+        psi.setExperienciaFormacoes(expForm);
+
+        Endereco endereco = this.enderecoRepository.findByUsuarioId(psi.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi possível encontrar um endereço dessa psicólogo"));
+        psi.setEndereco(endereco);
+
+        PsicologoDtoExibir dto = PsicologoMapper.toDtoCompleta(psi);
+
+        Integer quantidadeConsultas = this.consultaRepository.countConsultaByPsicologoId(psi.getId());
+        dto.setQtdAtendimentos(quantidadeConsultas);
+
+        List<Consulta> consultas = this.consultaRepository.findAllByPsicologoIdAndFimBefore(psi.getId(), LocalDateTime.now());
+
+        Double somaNota = 0.0;
+        for (Consulta consulta : consultas) {
+            somaNota += consulta.getNota();
+        }
+
+        Integer qtdConsultasAvaliadas = this.consultaRepository.countConsultaByPsicologoIdAndFimBefore(psi.getId(), LocalDateTime.now());
+        dto.setAvaliacao(consultas.isEmpty() ? 0.0 : somaNota / qtdConsultasAvaliadas);
+        return dto;
     }
 
     public List<PsicologoDtoConsultar> listarPorGenero(String genero) {

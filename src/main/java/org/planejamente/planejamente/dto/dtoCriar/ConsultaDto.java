@@ -20,9 +20,9 @@ import java.util.UUID;
 public class ConsultaDto {
     @CreationTimestamp
     private LocalDateTime dtCriacao;
-    @NotBlank
+    @NotNull
     private UUID idPsicologo;
-    @NotBlank
+    @NotNull
     private UUID idPaciente;
     @NotBlank
         @Size(max = 255)

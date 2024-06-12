@@ -12,4 +12,5 @@ import java.util.UUID;
 public class PsicologoDtoConsultar extends UsuarioDtoConsultar {
     private String idCalendarioDisponivel;
     private String idCalendarioConsulta;
+    private String descricao;
 }

@@ -14,21 +14,21 @@ import java.time.LocalDate;
 @Setter
 public abstract class UsuarioDto {
     @NotBlank
-        @Size(max = 255)
+    @Size(max = 255)
     private String nome;
     @NotNull
-        @Past
+    @Past
     private LocalDate dataDeNascimento;
     @Size(max = 11)
     private String telefone;
     @NotBlank
-        @Size(max = 9)
+    @Size(max = 9)
     private String genero;
     @CreationTimestamp
     private LocalDate dtCriacao;
     @NotBlank
-        @Email(message = "email inválido")
-            @Size(max = 255)
+    @Email(message = "email inválido")
+    @Size(max = 255)
     private String email;
     @NotBlank
         @Size(max = 122)

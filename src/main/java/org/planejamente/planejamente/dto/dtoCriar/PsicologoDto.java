@@ -13,30 +13,33 @@ import org.hibernate.validator.constraints.br.CPF;
 @Setter
 public class PsicologoDto extends UsuarioDto {
     @NotBlank
-        @Size(max = 15)
+    @Size(max = 15)
     private String crp;
     @Nullable
-        @CNPJ
+    @CNPJ
     private String cnpj;
     @NotBlank
-        @CPF
+    @CPF
     private String cpf;
     @Nullable
-        @Size(max = 255)
+    @Size(max = 255)
     private String linkFotoPerfil;
     @NotBlank
-        @Size(max = 255)
+    @Size(max = 255)
     private String idCalendarioDisponivel;
     @NotBlank
-        @Size(max = 255)
+    @Size(max = 255)
     private String idCalendarioConsulta;
     @Nullable
-        @Size(max = 255)
+    @Size(max = 255)
     private String linkAnamnese;
     @Nullable
-        @Size(max = 255)
+    @Size(max = 255)
     private String idAnamnese;
     @Nullable
-        @Size(max = 255)
+    @Size(max = 255)
     private String linkFotoDeFundo;
+    @Nullable
+    @Size(max = 255)
+    private String descricao;
 }

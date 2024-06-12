@@ -15,7 +15,7 @@ import java.util.UUID;
 @Setter
 public class ExperienciaFormacao {
     @Id
-        @UuidGenerator
+    @UuidGenerator
     private UUID id;
     private LocalDate dataInicio;
     private LocalDate dataFim;

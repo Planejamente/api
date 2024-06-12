@@ -2,8 +2,8 @@ package org.planejamente.planejamente.controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
-import org.planejamente.planejamente.dto.dtoConsultar.ConsultaDtoConsultar;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoConsultar;
+import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoExibir;
 import org.planejamente.planejamente.dto.dtoCriar.PsicologoDto;
 import org.planejamente.planejamente.entity.usuario.Psicologo;
 import org.planejamente.planejamente.mapper.PsicologoMapper;
@@ -11,11 +11,9 @@ import org.planejamente.planejamente.repository.PsicologoRepository;
 import org.planejamente.planejamente.repository.UsuarioRepository;
 import org.planejamente.planejamente.service.PsicologoService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @RestController
@@ -49,10 +47,10 @@ public class PsicologoController extends UsuarioController<PsicologoDto> {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PsicologoDtoConsultar> buscarPorId(@PathVariable UUID id) {
-        Psicologo psicologoBuscado = this.service.buscarPorId(id);
-        PsicologoDtoConsultar dto = PsicologoMapper.toDto(psicologoBuscado);
-        return ResponseEntity.ok(dto);
+    public ResponseEntity<PsicologoDtoExibir> buscarPorId(@PathVariable UUID id) {
+        PsicologoDtoExibir psicologoBuscado = this.service.buscarPorId(id);
+
+        return ResponseEntity.ok(psicologoBuscado);
     }
 
     @GetMapping("/filtro-genero/{genero}")

@@ -3,6 +3,7 @@ package org.planejamente.planejamente.mapper;
 import org.planejamente.planejamente.dto.dtoConsultar.EnderecoDtoConsultar;
 import org.planejamente.planejamente.dto.dtoCriar.EnderecoDto;
 import org.planejamente.planejamente.entity.Endereco;
+import org.planejamente.planejamente.entity.usuario.Usuario;
 
 import java.util.List;
 import java.util.Objects;
@@ -31,7 +32,17 @@ public class EnderecoMapper {
         dto.setRua(endereco.getRua());
         dto.setEstado(endereco.getEstado());
         dto.setCidade(endereco.getCidade());
-        dto.setIdUsuario(endereco.getUsuario().getId());
+
+        EnderecoDtoConsultar.Usuario dtoUsuario = new EnderecoDtoConsultar.Usuario();
+        Usuario usuarioEntidade = endereco.getUsuario();
+
+        if(!Objects.isNull(usuarioEntidade)) {
+            dtoUsuario.setId(usuarioEntidade.getId());
+            dtoUsuario.setNome(usuarioEntidade.getNome());
+            dtoUsuario.setEmail(usuarioEntidade.getEmail());
+        }
+
+        dto.setUsuario(dtoUsuario);
 
         return dto;
     }
