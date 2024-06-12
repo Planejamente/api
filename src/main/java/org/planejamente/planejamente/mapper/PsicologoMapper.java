@@ -23,7 +23,7 @@ public class PsicologoMapper extends UsuarioMapper<Psicologo, PsicologoDto> {
         psicologo.setCnpj(dto.getCnpj());
         psicologo.setCpf(dto.getCpf());
         psicologo.setLinkFotoPerfil(dto.getLinkFotoPerfil());
-        psicologo.setIdCalendarioDisponivel(dto.getIdCalendarioDisponivel());
+        psicologo.setIdCalendarioHorarioDeTrabalho(dto.getIdCalendarioDisponivel());
         psicologo.setIdCalendarioConsulta(dto.getIdCalendarioConsulta());
         psicologo.setLinkAnamnese(dto.getLinkAnamnese());
         psicologo.setIdAnamnese(dto.getIdAnamnese());
@@ -43,7 +43,7 @@ public class PsicologoMapper extends UsuarioMapper<Psicologo, PsicologoDto> {
         dto.setTelefone(psicologo.getTelefone());
         dto.setGenero(psicologo.getGenero());
         dto.setEmail(psicologo.getEmail());
-        dto.setIdCalendarioDisponivel(psicologo.getIdCalendarioDisponivel());
+        dto.setIdCalendarioDisponivel(psicologo.getIdCalendarioHorarioDeTrabalho());
         dto.setIdCalendarioConsulta(psicologo.getIdCalendarioConsulta());
         dto.setDescricao(psicologo.getDescricao());
 

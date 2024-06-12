@@ -2,6 +2,7 @@ package org.planejamente.planejamente.dto.dtoCriar;
 
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -42,4 +43,6 @@ public class PsicologoDto extends UsuarioDto {
     @Nullable
     @Size(max = 255)
     private String descricao;
+    @NotNull
+    private String accessToken;
 }

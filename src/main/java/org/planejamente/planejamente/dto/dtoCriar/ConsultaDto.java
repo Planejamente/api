@@ -24,19 +24,32 @@ public class ConsultaDto {
     private UUID idPsicologo;
     @NotNull
     private UUID idPaciente;
-    @NotBlank
-        @Size(max = 255)
+
+    @Size(max = 255)
     private String linkMeet;
+
     @NotBlank
         @Size(max = 255)
     private String linkAnamnese;
+
     @NotNull
         @FutureOrPresent
     private LocalDateTime inicio;
+
     @NotNull
         @FutureOrPresent
     private LocalDateTime fim;
+
     @NotBlank
         @Size(max = 255)
     private String idAnamnese;
+
+    @NotBlank
+    @Size(max = 255)
+    private String accessToken;
+
+    @NotBlank
+    @Size(max = 255)
+    private String calendarId;
+
 }

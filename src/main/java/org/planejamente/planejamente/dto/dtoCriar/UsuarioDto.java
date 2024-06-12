@@ -31,7 +31,7 @@ public abstract class UsuarioDto {
     @Size(max = 255)
     private String email;
     @NotBlank
-        @Size(max = 122)
+        @Size(max = 255)
     private String googleSub;
     @OneToOne
     private Endereco endereco;

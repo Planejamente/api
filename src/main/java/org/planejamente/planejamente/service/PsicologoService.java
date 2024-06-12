@@ -1,5 +1,6 @@
 package org.planejamente.planejamente.service;
 
+import org.planejamente.planejamente.dto.AuthCalendarId;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoConsultar;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoExibir;
 import org.planejamente.planejamente.dto.dtoCriar.PsicologoDto;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -32,6 +35,7 @@ public class PsicologoService {
     private final ExperienciaFormacaoRepository expFormRepository;
     private final EnderecoRepository enderecoRepository;
     private final ConsultaRepository consultaRepository;
+    private final CalendarService calendarService;
 
     public PsicologoService(PsicologoRepository repository, UsuarioRepository usuarioRepository,
                             EspecialidadeRepository especialidadeRepository, ExperienciaFormacaoRepository expFormRepository,
@@ -43,6 +47,7 @@ public class PsicologoService {
         this.enderecoRepository = enderecoRepository;
         this.consultaRepository = consultaRepository;
         this.mapper = new PsicologoMapper();
+        this.calendarService = calendarService;
     }
 
     public List<PsicologoDtoConsultar> listarTodos() {
@@ -101,23 +106,7 @@ public class PsicologoService {
         return false;
     }
 
-    public List<List<PsicologoDtoConsultar>> listarEmMatriz(int colunas) {
-        List<PsicologoDtoConsultar> todosPsicologos = listarTodos();
-        List<List<PsicologoDtoConsultar>> matriz = new ArrayList<>();
-        int linhaAtual = 0;
-
-        for (int i = 0; i < todosPsicologos.size(); i++) {
-            if (i % colunas == 0) {
-                matriz.add(new ArrayList<>());
-                linhaAtual++;
-            }
-            matriz.get(linhaAtual - 1).add(todosPsicologos.get(i));
-        }
-
-        return matriz;
-    }
-
-    public void salvar(PsicologoDto dto) {
+    public void salvar(PsicologoDto dto) throws GeneralSecurityException, IOException {
         var u = this.usuarioRepository.findByEmail(dto.getEmail());
         if(u != null) throw new ResponseStatusException(HttpStatus.CONFLICT, "Email já existe.");
 
@@ -125,6 +114,10 @@ public class PsicologoService {
 
         Psicologo psicologo = mapper.toEntity(dto);
         psicologo.setGoogleSub(encryptedPassword);
+
+        AuthCalendarId idsCalendars = calendarService.createCalendars(dto.getAccessToken());
+        psicologo.setIdCalendarioHorarioDeTrabalho(idsCalendars.calendarId1());
+        psicologo.setIdCalendarioConsulta(idsCalendars.calendarId2());
 
         this.repository.save(psicologo);
     }

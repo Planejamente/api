@@ -1,5 +1,6 @@
 package org.planejamente.planejamente.exception;
 
+import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import jakarta.xml.bind.ValidationException;
 import org.antlr.v4.runtime.InputMismatchException;
 import org.springframework.http.HttpStatus;
@@ -28,5 +29,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity handleInputMismatchException(MethodArgumentNotValidException ex) {
         return ResponseEntity.status(400).body(ex.getFieldError());
+    }
+    
+    @ExceptionHandler(GoogleJsonResponseException.class)
+    public ResponseEntity handleGoogleJsonResponseException(GoogleJsonResponseException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
     }
 }

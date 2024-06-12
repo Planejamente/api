@@ -92,21 +92,4 @@ import static org.mockito.Mockito.when;
             assertEquals(HttpStatus.OK, response.getStatusCode());
             assertEquals(listaOrdenada, response.getBody());
         }
-
-        @Test
-        public void testListarEmMatriz() {
-            int colunas = 3;
-
-            List<List<PsicologoDtoConsultar>> matriz = new ArrayList<>();
-            List<PsicologoDtoConsultar> linha = new ArrayList<>();
-            linha.add(psicologoDto);
-            matriz.add(linha);
-
-            when(psicologoService.listarEmMatriz(colunas)).thenReturn(matriz);
-
-            ResponseEntity<List<List<PsicologoDtoConsultar>>> response = psicologoController.listarEmMatriz(colunas);
-
-            assertEquals(HttpStatus.OK, response.getStatusCode());
-            assertEquals(matriz, response.getBody());
-        }
     }

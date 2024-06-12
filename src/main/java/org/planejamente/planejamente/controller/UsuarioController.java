@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 @RestController
 @CrossOrigin
 @SecurityRequirement(name = "auth-api")
 public abstract class UsuarioController<dtoCreateT extends UsuarioDto> {
-    public abstract ResponseEntity register(@RequestBody @Valid dtoCreateT data);
+    public abstract ResponseEntity register(@RequestBody @Valid dtoCreateT data) throws GeneralSecurityException, IOException;
 }

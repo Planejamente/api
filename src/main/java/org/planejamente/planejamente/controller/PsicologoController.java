@@ -13,6 +13,8 @@ import org.planejamente.planejamente.service.PsicologoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,7 +37,7 @@ public class PsicologoController extends UsuarioController<PsicologoDto> {
 
     @Override
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid PsicologoDto data) {
+    public ResponseEntity register(@RequestBody @Valid PsicologoDto data) throws GeneralSecurityException, IOException {
         this.service.salvar(data);
         return ResponseEntity.status(201).build();
     }
@@ -65,10 +67,5 @@ public class PsicologoController extends UsuarioController<PsicologoDto> {
         return listaOrdenada.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(listaOrdenada);
     }
 
-    @GetMapping("/matriz/{colunas}")
-    public ResponseEntity<List<List<PsicologoDtoConsultar>>> listarEmMatriz(@PathVariable int colunas) {
-        List<List<PsicologoDtoConsultar>> matriz = this.service.listarEmMatriz(colunas);
-        return matriz.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(matriz);
-    }
 
 }
