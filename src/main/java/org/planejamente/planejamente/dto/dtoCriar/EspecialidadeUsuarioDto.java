@@ -7,13 +7,14 @@ import lombok.Setter;
 import org.planejamente.planejamente.entity.Especialidade;
 import org.planejamente.planejamente.entity.usuario.Psicologo;
 
+import java.util.List;
+import java.util.UUID;
+
 @Getter
 @Setter
 public class EspecialidadeUsuarioDto {
-    @ManyToOne
-        @NotNull
-    private Especialidade especialidade;
-    @ManyToOne
-        @NotNull
-    private Psicologo psicologo;
+    @NotNull
+    private UUID idPsicologo;
+    @NotNull
+    private List<UUID> listaIdEspecialidade;
 }
