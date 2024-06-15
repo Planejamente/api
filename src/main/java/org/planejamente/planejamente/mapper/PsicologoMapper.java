@@ -1,5 +1,6 @@
 package org.planejamente.planejamente.mapper;
 
+import org.planejamente.planejamente.dto.dtoAtualizar.PsicologoDtoAtualizar;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoConsultar;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoExibir;
 import org.planejamente.planejamente.dto.dtoCriar.PsicologoDto;
@@ -102,5 +103,14 @@ public class PsicologoMapper extends UsuarioMapper<Psicologo, PsicologoDto> {
         }
         dto.setExperienciasFormacoes(experienciasFormacoesDto);
         return dto;
+    }
+
+    public static Psicologo merge(Psicologo psiAntigo, PsicologoDtoAtualizar atualizacao) {
+        if(!Objects.isNull(atualizacao.getNome())) psiAntigo.setNome(atualizacao.getNome());
+        if(!Objects.isNull(atualizacao.getTelefone())) psiAntigo.setTelefone(atualizacao.getTelefone());
+        if(!Objects.isNull(atualizacao.getGenero())) psiAntigo.setGenero(atualizacao.getGenero());
+        if(!Objects.isNull(atualizacao.getDescricao())) psiAntigo.setDescricao(atualizacao.getDescricao());
+
+        return psiAntigo;
     }
 }
