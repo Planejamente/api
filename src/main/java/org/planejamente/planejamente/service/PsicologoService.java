@@ -1,5 +1,6 @@
 package org.planejamente.planejamente.service;
 
+import org.planejamente.planejamente.dto.dtoAtualizar.PsicologoDtoAtualizar;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoConsultar;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoExibir;
 import org.planejamente.planejamente.dto.dtoCriar.PsicologoDto;
@@ -12,8 +13,6 @@ import org.planejamente.planejamente.mapper.PsicologoMapper;
 import org.planejamente.planejamente.oredenacao.QuickSort;
 import org.planejamente.planejamente.repository.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -127,5 +126,14 @@ public class PsicologoService {
         psicologo.setGoogleSub(encryptedPassword);
 
         this.repository.save(psicologo);
+    }
+
+    public PsicologoDtoConsultar atualizar(PsicologoDtoAtualizar psiAtualizado, UUID idPsi) {
+        Psicologo psicologo = this.repository.findById(idPsi)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Psicólogo não encontrado"));
+
+        Psicologo psicologoAtualizado = PsicologoMapper.merge(psicologo, psiAtualizado);
+        Psicologo psiAtualizadoSalvo = this.repository.save(psicologoAtualizado);
+        return PsicologoMapper.toDto(psiAtualizadoSalvo);
     }
 }

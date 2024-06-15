@@ -2,6 +2,7 @@ package org.planejamente.planejamente.controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
+import org.planejamente.planejamente.dto.dtoAtualizar.PsicologoDtoAtualizar;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoConsultar;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoExibir;
 import org.planejamente.planejamente.dto.dtoCriar.PsicologoDto;
@@ -71,4 +72,9 @@ public class PsicologoController extends UsuarioController<PsicologoDto> {
         return matriz.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(matriz);
     }
 
+    @PutMapping("/{idPsicologo}")
+    public ResponseEntity<PsicologoDtoConsultar> atualizar(@RequestBody @Valid PsicologoDtoAtualizar dto, @PathVariable UUID idPsicologo) {
+        PsicologoDtoConsultar psiAtualizado = this.service.atualizar(dto, idPsicologo);
+        return ResponseEntity.ok(psiAtualizado);
+    }
 }
