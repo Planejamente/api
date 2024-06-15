@@ -9,4 +9,5 @@ import java.util.UUID;
 
 public interface EspecialidadeRepository extends JpaRepository<Especialidade, UUID> {
     List<Especialidade> findAllByPsicologoId(UUID idPsicologo);
+    Boolean existsByTituloIgnoreCase(String titulo);
 }
