@@ -2,6 +2,8 @@ package org.planejamente.planejamente.repository;
 
 import org.planejamente.planejamente.entity.Consulta;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,4 +16,8 @@ public interface ConsultaRepository extends JpaRepository<Consulta, UUID> {
     Integer countConsultaByPsicologoId(UUID idPsicologo);
     List<Consulta> findAllByPsicologoIdAndFimBefore(UUID idPsicologo, LocalDateTime data);
     Integer countConsultaByPsicologoIdAndFimBefore(UUID idPsicologo, LocalDateTime data);
+    @Query("SELECT DISTINCT c.paciente.nome FROM Consulta c WHERE c.psicologo.id = :psicologoId AND c.fim BETWEEN :inicioMes AND :fimMes")
+    List<String> findNomesPacientesNoMes(@Param("psicologoId") UUID psicologoId, @Param("inicioMes") LocalDateTime inicioMes, @Param("fimMes") LocalDateTime fimMes);
+    @Query("SELECT COUNT(DISTINCT c.paciente.id) FROM Consulta c WHERE c.fim BETWEEN :inicioAno AND :fimAno")
+    long countTotalPacientesNoAno(@Param("inicioAno") LocalDateTime inicioAno, @Param("fimAno") LocalDateTime fimAno);
 }

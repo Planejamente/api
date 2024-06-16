@@ -6,11 +6,12 @@ import org.planejamente.planejamente.dto.dtoAtualizar.PsicologoDtoAtualizar;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoConsultar;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoExibir;
 import org.planejamente.planejamente.dto.dtoCriar.PsicologoDto;
-import org.planejamente.planejamente.entity.usuario.Psicologo;
+import org.planejamente.planejamente.dto.dtoCriar.RelatorioMensalDTO;
 import org.planejamente.planejamente.mapper.PsicologoMapper;
 import org.planejamente.planejamente.repository.PsicologoRepository;
 import org.planejamente.planejamente.repository.UsuarioRepository;
 import org.planejamente.planejamente.service.PsicologoService;
+import org.planejamente.planejamente.service.RelatorioMensalService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,12 +29,14 @@ public class PsicologoController extends UsuarioController<PsicologoDto> {
     private final UsuarioRepository usuarioRepository;
     private final PsicologoMapper mapper;
     private final PsicologoService service;
+    private final RelatorioMensalService relatorioMensalService;
 
-    public PsicologoController(PsicologoRepository repository, UsuarioRepository usuarioRepository, PsicologoService psicologoService) {
+    public PsicologoController(PsicologoRepository repository, UsuarioRepository usuarioRepository, PsicologoService psicologoService, RelatorioMensalService relatorioMensalService) {
         this.repository = repository;
         this.usuarioRepository = usuarioRepository;
         this.service = psicologoService;
         this.mapper = new PsicologoMapper();
+        this.relatorioMensalService = relatorioMensalService;
     }
 
     @Override
@@ -74,4 +77,12 @@ public class PsicologoController extends UsuarioController<PsicologoDto> {
         PsicologoDtoConsultar psiAtualizado = this.service.atualizar(dto, idPsicologo);
         return ResponseEntity.ok(psiAtualizado);
     }
+
+    @GetMapping("/{id}/relatorio-mensal/{mes}")
+    public ResponseEntity<RelatorioMensalDTO> getRelatorioMensal(@PathVariable UUID id, @PathVariable int mes) {
+        RelatorioMensalDTO relatorio = relatorioMensalService.gerarRelatorioMensal(id, mes);
+        return ResponseEntity.ok(relatorio);
+    }
+
+
 }
