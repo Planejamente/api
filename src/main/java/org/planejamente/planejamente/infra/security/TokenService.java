@@ -30,6 +30,7 @@ public class TokenService {
                     .withSubject(usuario.getEmail())
                     .withExpiresAt(genExpirationDate())
                     .withClaim("tipoUsuario", tipoUsuario)
+                    .withClaim("id", usuario.getId().toString())
                     .sign(algorithm);
             return token;
         } catch (JWTCreationException exception) {
