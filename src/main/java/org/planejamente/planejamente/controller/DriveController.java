@@ -33,7 +33,7 @@ public class DriveController {
             return ResponseEntity.badRequest().body("Nenhum arquivo foi fornecido.");
         }
 
-        File tempFile = File.createTempFile("anamenese-teste", null);
+        File tempFile = File.createTempFile("anamenese", null);
         file.transferTo(tempFile);
         Response res = (Response) service.uploadFileDrive(tempFile, idPsi);
 
