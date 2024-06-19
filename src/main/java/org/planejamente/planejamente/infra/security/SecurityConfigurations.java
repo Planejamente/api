@@ -42,6 +42,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/hello-bro").permitAll()
                         .requestMatchers(HttpMethod.POST,"/blob/foto-de-usuario").hasRole("USER")
                         .requestMatchers(HttpMethod.POST,"/blob/foto-de-fundo").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST,"/drive/subir-arquivo").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
