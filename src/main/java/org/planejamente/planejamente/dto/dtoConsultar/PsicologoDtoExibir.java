@@ -10,6 +10,8 @@ public class PsicologoDtoExibir {
     private String nome;
     private String crp;
     private Integer idade;
+    private String idCalendarioHorarioDeTrabalho;
+    private String idCalendarioConsulta;
     private Double avaliacao; //
     private String email;
     private String telefone;
