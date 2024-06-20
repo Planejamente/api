@@ -46,4 +46,14 @@ public class EnderecoService {
 
         return EnderecoMapper.toDto(endereco);
     }
+
+    public EnderecoDtoConsultar atualizar(String id, String cep) {
+        Endereco endereco = this.enderecoRepository.findByUsuarioId(UUID.fromString(id))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        endereco.setCep(cep);
+        Endereco enderecoAtualizado = this.enderecoRepository.save(endereco);
+
+        return EnderecoMapper.toDto(enderecoAtualizado);
+    }
 }

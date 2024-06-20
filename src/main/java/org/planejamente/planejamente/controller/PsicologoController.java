@@ -3,6 +3,7 @@ package org.planejamente.planejamente.controller;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.planejamente.planejamente.dto.dtoAtualizar.PsicologoDtoAtualizar;
+import org.planejamente.planejamente.dto.dtoConsultar.EnderecoDtoConsultar;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoConsultar;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoExibir;
 import org.planejamente.planejamente.dto.dtoCriar.PsicologoDto;
@@ -10,6 +11,7 @@ import org.planejamente.planejamente.dto.dtoCriar.RelatorioMensalDTO;
 import org.planejamente.planejamente.mapper.PsicologoMapper;
 import org.planejamente.planejamente.repository.PsicologoRepository;
 import org.planejamente.planejamente.repository.UsuarioRepository;
+import org.planejamente.planejamente.service.EnderecoService;
 import org.planejamente.planejamente.service.PsicologoService;
 import org.planejamente.planejamente.service.RelatorioMensalService;
 import org.springframework.http.ResponseEntity;
@@ -30,11 +32,12 @@ public class PsicologoController extends UsuarioController<PsicologoDto> {
     private final PsicologoMapper mapper;
     private final PsicologoService service;
     private final RelatorioMensalService relatorioMensalService;
-
-    public PsicologoController(PsicologoRepository repository, UsuarioRepository usuarioRepository, PsicologoService psicologoService, RelatorioMensalService relatorioMensalService) {
+    private final EnderecoService cepService;
+    public PsicologoController(PsicologoRepository repository, UsuarioRepository usuarioRepository, PsicologoService psicologoService, RelatorioMensalService relatorioMensalService, EnderecoService cepService) {
         this.repository = repository;
         this.usuarioRepository = usuarioRepository;
         this.service = psicologoService;
+        this.cepService = cepService;
         this.mapper = new PsicologoMapper();
         this.relatorioMensalService = relatorioMensalService;
     }
@@ -75,6 +78,7 @@ public class PsicologoController extends UsuarioController<PsicologoDto> {
     @PutMapping("/{idPsicologo}")
     public ResponseEntity<PsicologoDtoConsultar> atualizar(@RequestBody @Valid PsicologoDtoAtualizar dto, @PathVariable UUID idPsicologo) {
         PsicologoDtoConsultar psiAtualizado = this.service.atualizar(dto, idPsicologo);
+        EnderecoDtoConsultar enderecoAtt = this.cepService.atualizar(String.valueOf(idPsicologo), dto.getCep());
         return ResponseEntity.ok(psiAtualizado);
     }
 

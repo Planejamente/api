@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 public class PsicologoDtoAtualizar {
@@ -20,4 +22,8 @@ public class PsicologoDtoAtualizar {
     @Nullable
     @Size(max = 255)
     private String descricao;
+    @Nullable
+    private LocalDate dataNascimento;
+    @Nullable
+    private String cep;
 }

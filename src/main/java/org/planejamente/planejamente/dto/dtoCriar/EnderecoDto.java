@@ -1,5 +1,6 @@
 package org.planejamente.planejamente.dto.dtoCriar;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -23,6 +24,6 @@ public class EnderecoDto {
     @NotBlank
         @Size(max = 122)
     private String cidade;
-    @NotNull
+    @Nullable
     private UUID idUsuario;
 }
