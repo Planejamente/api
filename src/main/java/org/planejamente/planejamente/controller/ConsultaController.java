@@ -29,8 +29,15 @@ public class ConsultaController {
     }
 
     @GetMapping("/psicologo/{idPsicologo}")
-    public ResponseEntity<ConsultaDtoConsultar> buscarPorPsicologo(@PathVariable UUID idPsicologo) {
-        return null;
+    public ResponseEntity<List<ConsultaDtoConsultar>> buscarPorPsicologo(@PathVariable UUID idPsicologo) {
+        List<ConsultaDtoConsultar> lista = this.service.buscarPorPsicologo(idPsicologo);
+        return lista.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("/paciente/{idPaciente}")
+    public ResponseEntity<List<ConsultaDtoConsultar>> buscarPorPaciente(@PathVariable UUID idPaciente) {
+        List<ConsultaDtoConsultar> lista = this.service.buscarPorPaciente(idPaciente);
+        return lista.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(lista);
     }
 
     @PostMapping

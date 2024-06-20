@@ -20,4 +20,6 @@ public interface ConsultaRepository extends JpaRepository<Consulta, UUID> {
     List<String> findNomesPacientesNoMes(@Param("psicologoId") UUID psicologoId, @Param("inicioMes") LocalDateTime inicioMes, @Param("fimMes") LocalDateTime fimMes);
     @Query("SELECT COUNT(DISTINCT c.paciente.id) FROM Consulta c WHERE c.fim BETWEEN :inicioAno AND :fimAno")
     long countTotalPacientesNoAno(@Param("inicioAno") LocalDateTime inicioAno, @Param("fimAno") LocalDateTime fimAno);
+    List<Consulta> findAllByPsicologoId(UUID idPsi);
+    List<Consulta> findAllByPacienteId(UUID idPac);
 }

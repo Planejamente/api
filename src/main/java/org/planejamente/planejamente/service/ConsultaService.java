@@ -1,6 +1,7 @@
 package org.planejamente.planejamente.service;
 
 import org.planejamente.planejamente.dto.PsicologosDisponiveisDto;
+import org.planejamente.planejamente.dto.dtoConsultar.ConsultaDtoConsultar;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoConsultar;
 import org.planejamente.planejamente.dto.dtoCriar.ConsultaDto;
 import org.planejamente.planejamente.entity.Consulta;
@@ -88,6 +89,24 @@ public class ConsultaService {
 
         // Salva a consulta no repositório
         return consultaRepository.save(consulta);
+    }
+
+    public List<ConsultaDtoConsultar> buscarPorPsicologo(UUID idPsi) {
+        if (!this.psicologoRepository.existsById(idPsi)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        List<Consulta> consultas = this.consultaRepository.findAllByPsicologoId(idPsi);
+        return ConsultaMapper.toDto(consultas);
+    }
+
+    public List<ConsultaDtoConsultar> buscarPorPaciente(UUID idPac) {
+        if(!this.pacienteRepository.existsById(idPac)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        List<Consulta> consultas = this.consultaRepository.findAllByPacienteId(idPac);
+        return ConsultaMapper.toDto(consultas);
     }
 
     // Método para buscar todos os psicólogos disponíveis
