@@ -17,4 +17,6 @@ public interface PsicologoRepository extends JpaRepository<Psicologo, UUID> {
 
     @Query("SELECT p.nome FROM Psicologo p WHERE p.id = :id")
     String findNomeById(@Param("id") UUID id);
+
+    List<Psicologo> findAllByGeneroEqualsIgnoreCase(String genero);
 }

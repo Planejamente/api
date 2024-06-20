@@ -13,6 +13,7 @@ import org.planejamente.planejamente.entity.usuario.Psicologo;
 import org.planejamente.planejamente.mapper.PsicologoMapper;
 import org.planejamente.planejamente.oredenacao.QuickSort;
 import org.planejamente.planejamente.repository.*;
+import org.planejamente.planejamente.util.PilhaObj;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.time.temporal.IsoFields;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,6 +55,41 @@ public class PsicologoService {
     public List<PsicologoDtoConsultar> listarTodos() {
         List<Psicologo> todos = this.repository.findAll();
         return PsicologoMapper.toDto(todos);
+    }
+
+    public List<PsicologoDtoExibir> listarComFiltro(String genero, String cidade, LocalDateTime dataHoraInicio, LocalDateTime dataHoraFim) {
+        List<Psicologo> listaPsi = this.repository.findAllByGeneroEqualsIgnoreCase(genero);
+        List<PsicologoDtoExibir> listaDto = new ArrayList<>();
+        PilhaObj<Psicologo> usuariosParaDeletar = new PilhaObj<>(listaPsi.size());
+
+        if(!listaPsi.isEmpty()) {
+            for (Psicologo psicologo : listaPsi) {
+                UUID idPsi = psicologo.getId();
+                boolean existe = this.consultaRepository.existsByPsicologoIdAndFimBetween(idPsi, dataHoraInicio, dataHoraFim) || this.consultaRepository.existsByPsicologoIdAndInicioBetween(idPsi, dataHoraInicio, dataHoraFim);
+
+                if(existe) usuariosParaDeletar.push(psicologo);
+            }
+
+            while (!usuariosParaDeletar.isEmpty()) {
+                listaPsi.remove(usuariosParaDeletar.pop());
+            }
+
+            for (Psicologo psicologo : listaPsi) {
+                UUID idPsi = psicologo.getId();
+                boolean existe = this.enderecoRepository.existsByUsuarioIdAndCidadeNotIgnoreCase(idPsi, cidade);
+                if(existe) usuariosParaDeletar.push(psicologo);
+            }
+
+            while (!usuariosParaDeletar.isEmpty()) {
+                listaPsi.remove(usuariosParaDeletar.pop());
+            }
+
+            for (Psicologo psicologo : listaPsi) {
+                listaDto.add(buscarPorId(psicologo.getId()));
+            }
+        }
+
+        return listaDto;
     }
 
     public PsicologoDtoExibir buscarPorId(UUID id) {

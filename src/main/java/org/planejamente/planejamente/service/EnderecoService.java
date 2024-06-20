@@ -36,6 +36,9 @@ public class EnderecoService {
         Endereco endereco = EnderecoMapper.toEntity(dto);
         endereco.setUsuario(usuario);
 
+        usuario.setEndereco(endereco);
+        this.usuarioRepository.save(usuario);
+
         Endereco enderecoSalvo = this.enderecoRepository.save(endereco);
         return EnderecoMapper.toDto(enderecoSalvo);
     }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -84,5 +85,12 @@ public class PsicologoController extends UsuarioController<PsicologoDto> {
         return ResponseEntity.ok(relatorio);
     }
 
+    @GetMapping("/filtros")
+    public ResponseEntity<List<PsicologoDtoExibir>> buscarPorFiltro(@RequestParam String genero, @RequestParam String cidade,
+                                                              @RequestParam LocalDateTime dataHoraInicio,
+                                                              @RequestParam LocalDateTime dataHoraFim) {
+        List<PsicologoDtoExibir> lista = this.service.listarComFiltro(genero, cidade, dataHoraInicio, dataHoraFim);
 
+        return lista.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(lista);
+    }
 }
