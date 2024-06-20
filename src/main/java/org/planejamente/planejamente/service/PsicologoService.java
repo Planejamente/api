@@ -166,5 +166,25 @@ public class PsicologoService {
         Psicologo psicologoAtualizado = PsicologoMapper.merge(psicologo, psiAtualizado);
         Psicologo psiAtualizadoSalvo = this.repository.save(psicologoAtualizado);
         return PsicologoMapper.toDto(psiAtualizadoSalvo);
+    public void salvaFotoDePerfil(String linkFotoPerfil, UUID id) {
+        Psicologo psicologo = this.repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Psicologo não encontrado"));
+        psicologo.setLinkFotoPerfil(linkFotoPerfil);
+        this.repository.save(psicologo);
+    }
+
+    public void salvaFotoDeFundo(String linkFotoPerfil, UUID id) {
+        Psicologo psicologo = this.repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Psicologo não encontrado"));
+        psicologo.setLinkFotoDeFundo(linkFotoPerfil);
+        this.repository.save(psicologo);
+    }
+
+    public void salvarAnamenese(String linkAnamenese, String idAnamenese, UUID id) {
+        Psicologo psicologo = this.repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Psicologo não encontrado"));
+        psicologo.setIdAnamnese(linkAnamenese);
+        psicologo.setLinkAnamnese(idAnamenese);
+        this.repository.save(psicologo);
     }
 }
