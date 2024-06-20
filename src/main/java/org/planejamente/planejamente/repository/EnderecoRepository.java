@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface EnderecoRepository extends JpaRepository<Endereco, UUID> {
     Optional<Endereco> findByUsuarioId(UUID id);
     Boolean existsByUsuarioId(UUID usuarioId);
+    Boolean existsByUsuarioIdAndCidadeNotIgnoreCase(UUID id, String cidade);
 }
