@@ -4,12 +4,14 @@ import org.planejamente.planejamente.dto.AuthCalendarId;
 import org.planejamente.planejamente.dto.dtoAtualizar.PsicologoDtoAtualizar;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoConsultar;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoExibir;
+import org.planejamente.planejamente.dto.dtoCriar.EnderecoDto;
 import org.planejamente.planejamente.dto.dtoCriar.PsicologoDto;
 import org.planejamente.planejamente.entity.Consulta;
 import org.planejamente.planejamente.entity.Endereco;
 import org.planejamente.planejamente.entity.Especialidade;
 import org.planejamente.planejamente.entity.ExperienciaFormacao;
 import org.planejamente.planejamente.entity.usuario.Psicologo;
+import org.planejamente.planejamente.mapper.EnderecoMapper;
 import org.planejamente.planejamente.mapper.PsicologoMapper;
 import org.planejamente.planejamente.oredenacao.QuickSort;
 import org.planejamente.planejamente.repository.*;
@@ -149,6 +151,8 @@ public class PsicologoService {
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(dto.getGoogleSub());
 
+
+
         Psicologo psicologo = mapper.toEntity(dto);
         psicologo.setGoogleSub(encryptedPassword);
 
@@ -156,7 +160,17 @@ public class PsicologoService {
         psicologo.setIdCalendarioHorarioDeTrabalho(idsCalendars.calendarId1());
         psicologo.setIdCalendarioConsulta(idsCalendars.calendarId2());
 
-        this.repository.save(psicologo);
+        Psicologo criado = this.repository.save(psicologo);
+        EnderecoDto enderecoAcriar = new EnderecoDto();
+        enderecoAcriar.setCep(dto.getEndereco().getCep());
+        enderecoAcriar.setIdUsuario(criado.getId());
+        System.out.println("caralho" + criado.getId());
+        enderecoAcriar.setEstado(dto.getEndereco().getEstado());
+        enderecoAcriar.setCidade(dto.getEndereco().getCidade());
+        enderecoAcriar.setRua(dto.getEndereco().getRua());
+        Endereco endereco = EnderecoMapper.toEntity(enderecoAcriar);
+        endereco.setUsuario(criado);
+        this.enderecoRepository.save(endereco);
     }
 
     public PsicologoDtoConsultar atualizar(PsicologoDtoAtualizar psiAtualizado, UUID idPsi) {
