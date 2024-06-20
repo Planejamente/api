@@ -30,7 +30,7 @@ public class GoogleService {
 
     private static String getGoogleCredentials() {
         String currentDirectory = System.getProperty("user.dir");
-        Path filepath = Paths.get(currentDirectory, "cred.bundle.json");
+        Path filepath = Paths.get(currentDirectory, "credential.json");
         return filepath.toString();
     }
 
