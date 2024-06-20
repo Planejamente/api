@@ -3,6 +3,8 @@ package org.planejamente.planejamente.service;
 import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.models.BlobItem;
+import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoExibir;
+import org.planejamente.planejamente.dto.dtoCriar.PsicologoDto;
 import org.planejamente.planejamente.entity.usuario.Psicologo;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,7 +36,7 @@ public class BlobService {
             fileUrls.add(fileUrl);
         }
 
-        Psicologo psicologo = this.service.buscarPorId(idPsicologo);
+        PsicologoDtoExibir psicologo = this.service.buscarPorId(idPsicologo);
 
         if(psicologo == null){
             return null;
@@ -69,7 +71,7 @@ public class BlobService {
             fileUrls.add(fileUrl);
         }
 
-        Psicologo psicologo = this.service.buscarPorId(idPsicologo);
+        PsicologoDtoExibir psicologo = this.service.buscarPorId(idPsicologo);
 
         if(psicologo == null){
             return null;

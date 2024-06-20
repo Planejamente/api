@@ -180,6 +180,7 @@ public class PsicologoService {
         Psicologo psicologoAtualizado = PsicologoMapper.merge(psicologo, psiAtualizado);
         Psicologo psiAtualizadoSalvo = this.repository.save(psicologoAtualizado);
         return PsicologoMapper.toDto(psiAtualizadoSalvo);
+    }
     public void salvaFotoDePerfil(String linkFotoPerfil, UUID id) {
         Psicologo psicologo = this.repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Psicologo não encontrado"));
