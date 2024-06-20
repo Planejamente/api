@@ -67,6 +67,8 @@ public class PsicologoMapper extends UsuarioMapper<Psicologo, PsicologoDto> {
         dto.setFotoPerfil(psicologo.getLinkFotoPerfil());
         dto.setFundo(psicologo.getLinkFotoDeFundo());
         dto.setEstado(psicologo.getEndereco().getEstado());
+        dto.setIdCalendarioHorarioDeTrabalho(psicologo.getIdCalendarioHorarioDeTrabalho());
+        dto.setIdCalendarioConsulta(psicologo.getIdCalendarioConsulta());
 
         List<PsicologoDtoExibir.Especialidade> especialidadesDto = new ArrayList<>();
         List<Especialidade> especialidadesEntidade = psicologo.getEspecialidades();
