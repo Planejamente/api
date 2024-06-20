@@ -11,6 +11,13 @@ public class PsicologoDtoExibir {
     private String crp;
     private Integer idade;
     private Double avaliacao; //
+    private String email;
+    private String telefone;
+    private LocalDate dataNascimento;
+    private String cep;
+    private String cpf;
+    private String cnpj;
+    private String genero;
     private Integer qtdAtendimentos;
     private String descricao;
     private String estado;

@@ -67,6 +67,13 @@ public class PsicologoMapper extends UsuarioMapper<Psicologo, PsicologoDto> {
         dto.setFotoPerfil(psicologo.getLinkFotoPerfil());
         dto.setFundo(psicologo.getLinkFotoDeFundo());
         dto.setEstado(psicologo.getEndereco().getEstado());
+        dto.setCep(psicologo.getEndereco().getCep());
+        dto.setCpf(psicologo.getCpf());
+        dto.setCnpj(psicologo.getCnpj());
+        dto.setTelefone(psicologo.getTelefone());
+        dto.setEmail(psicologo.getEmail());
+        dto.setDataNascimento(psicologo.getDataDeNascimento());
+        dto.setGenero(psicologo.getGenero());
 
         List<PsicologoDtoExibir.Especialidade> especialidadesDto = new ArrayList<>();
         List<Especialidade> especialidadesEntidade = psicologo.getEspecialidades();
@@ -110,6 +117,8 @@ public class PsicologoMapper extends UsuarioMapper<Psicologo, PsicologoDto> {
         if(!Objects.isNull(atualizacao.getTelefone())) psiAntigo.setTelefone(atualizacao.getTelefone());
         if(!Objects.isNull(atualizacao.getGenero())) psiAntigo.setGenero(atualizacao.getGenero());
         if(!Objects.isNull(atualizacao.getDescricao())) psiAntigo.setDescricao(atualizacao.getDescricao());
+        if(!Objects.isNull(atualizacao.getDataNascimento())) psiAntigo.setDataDeNascimento(atualizacao.getDataNascimento());
+
 
         return psiAntigo;
     }
