@@ -6,7 +6,12 @@ import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.FileContent;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
+
+import org.planejamente.planejamente.configuration.GoogleServiceAuthConfig;
 import org.planejamente.planejamente.configuration.Response;
+
+import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.model.CalendarListEntry;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import org.springframework.stereotype.Service;
@@ -17,6 +22,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 @Service
 public class GoogleService {
@@ -96,5 +102,14 @@ public class GoogleService {
                 JSON_FACTORY,
                 credential)
                 .build();
+    }
+
+        public static void addCalendarToServiceAccount(List<String> calendarsId) throws GeneralSecurityException, IOException {
+        Calendar calendarService = GoogleServiceAuthConfig.authenticateGoogleCalendar();
+        for (String calendarId : calendarsId) {
+            CalendarListEntry newCalendarEntry = new CalendarListEntry();
+            newCalendarEntry.setId(calendarId);
+            calendarService.calendarList().insert(newCalendarEntry).execute();
+        }
     }
 }

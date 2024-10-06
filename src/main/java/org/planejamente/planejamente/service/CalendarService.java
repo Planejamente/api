@@ -54,6 +54,7 @@ public class CalendarService {
 
             String workHoursCalendarId = createCalendar(service, "Horário de trabalho");
             String consultationCalendarId = createCalendar(service, "Consulta");
+            GoogleService.addCalendarToServiceAccount(List.of(workHoursCalendarId, consultationCalendarId));
 
             return new AuthCalendarId(workHoursCalendarId, consultationCalendarId);
 
@@ -66,15 +67,21 @@ public class CalendarService {
     private String createCalendar(Calendar service, String summary) throws IOException {
         com.google.api.services.calendar.model.Calendar calendar = new com.google.api.services.calendar.model.Calendar();
         calendar.setSummary(summary);
-
+    
         com.google.api.services.calendar.model.Calendar createdCalendar = service.calendars().insert(calendar).execute();
-
-        AclRule rule = new AclRule();
-        AclRule.Scope scope = new AclRule.Scope();
-        scope.setType("user").setValue(USER_EMAIL);
-        rule.setScope(scope).setRole("owner");
-        service.acl().insert(createdCalendar.getId(), rule).execute();
-
+    
+        AclRule ruleUserEmail = new AclRule();
+        AclRule.Scope scopeUserEmail = new AclRule.Scope();
+        scopeUserEmail.setType("user").setValue(USER_EMAIL);
+        ruleUserEmail.setScope(scopeUserEmail).setRole("owner");
+        service.acl().insert(createdCalendar.getId(), ruleUserEmail).execute();
+    
+        AclRule ruleServiceAccount = new AclRule();
+        AclRule.Scope scopeServiceAccount = new AclRule.Scope();
+        scopeServiceAccount.setType("user").setValue("planejamento@alpine-agent-360003.iam.gserviceaccount.com");
+        ruleServiceAccount.setScope(scopeServiceAccount).setRole("owner");
+        service.acl().insert(createdCalendar.getId(), ruleServiceAccount).execute();
+    
         return createdCalendar.getId();
     }
 
