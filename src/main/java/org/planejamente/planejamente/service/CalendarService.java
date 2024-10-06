@@ -55,11 +55,10 @@ public class CalendarService {
             String workHoursCalendarId = createCalendar(service, "Horário de trabalho");
             String consultationCalendarId = createCalendar(service, "Consulta");
             GoogleService.addCalendarToServiceAccount(List.of(workHoursCalendarId, consultationCalendarId));
-
             return new AuthCalendarId(workHoursCalendarId, consultationCalendarId);
 
         } catch (IOException | GeneralSecurityException e) {
-            logger.log(Level.SEVERE, "Erro ao criar calendário", e);
+            logger.log(Level.SEVERE, "CalendarService: Erro ao criar calendário", e);
             throw e;
         }
     }
@@ -78,7 +77,7 @@ public class CalendarService {
     
         AclRule ruleServiceAccount = new AclRule();
         AclRule.Scope scopeServiceAccount = new AclRule.Scope();
-        scopeServiceAccount.setType("user").setValue("planejamento@alpine-agent-360003.iam.gserviceaccount.com");
+        scopeServiceAccount.setType("user").setValue("planejamente@alpine-agent-360003.iam.gserviceaccount.com");
         ruleServiceAccount.setScope(scopeServiceAccount).setRole("owner");
         service.acl().insert(createdCalendar.getId(), ruleServiceAccount).execute();
     

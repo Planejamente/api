@@ -19,6 +19,7 @@ import java.util.List;
 public class GoogleServiceAuthConfig {
 
 
+    // COMPONENTES DE AUTENTICAÇÃO___________________________________________________________________________________________
     // Nome da aplicação que será registrada na API do Google Calendar
     private static final String APPLICATION_NAME = "Google Calendar API Java Integration";
 
@@ -31,7 +32,7 @@ public class GoogleServiceAuthConfig {
     // Escopos necessários para acessar o Google Calendar
     private static final List<String> SCOPES = Collections.singletonList(CalendarScopes.CALENDAR);
 
-    public static Calendar authenticateGoogleCalendar() throws GeneralSecurityException, IOException {
+    public static Calendar authenticateCalendarService() throws GeneralSecurityException, IOException {
             final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
             HttpRequestInitializer requestInitializer = new HttpCredentialsAdapter(ServiceAccountCredentials.fromStream(new FileInputStream(CREDENTIALS_FILE_PATH))
                     .createScoped(SCOPES));

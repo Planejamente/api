@@ -104,12 +104,13 @@ public class GoogleService {
                 .build();
     }
 
-        public static void addCalendarToServiceAccount(List<String> calendarsId) throws GeneralSecurityException, IOException {
-        Calendar calendarService = GoogleServiceAuthConfig.authenticateGoogleCalendar();
-        for (String calendarId : calendarsId) {
-            CalendarListEntry newCalendarEntry = new CalendarListEntry();
-            newCalendarEntry.setId(calendarId);
-            calendarService.calendarList().insert(newCalendarEntry).execute();
-        }
+    public static void addCalendarToServiceAccount(List<String> calendarsId) throws GeneralSecurityException, IOException {
+
+            Calendar calendarService = GoogleServiceAuthConfig.authenticateCalendarService();
+            for (String calendarId : calendarsId) {
+                CalendarListEntry newCalendarEntry = new CalendarListEntry();
+                newCalendarEntry.setId(calendarId);
+                calendarService.calendarList().insert(newCalendarEntry).execute();
+            }
     }
 }
