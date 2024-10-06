@@ -159,8 +159,8 @@ public class PsicologoService {
         AuthCalendarId idsCalendars = calendarService.createCalendars(dto.getAccessToken());
         psicologo.setIdCalendarioHorarioDeTrabalho(idsCalendars.calendarId1());
         psicologo.setIdCalendarioConsulta(idsCalendars.calendarId2());
-
         Psicologo criado = this.repository.save(psicologo);
+        
         EnderecoDto enderecoAcriar = new EnderecoDto();
         enderecoAcriar.setCep(dto.getEndereco().getCep());
         enderecoAcriar.setIdUsuario(criado.getId());
