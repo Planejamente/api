@@ -11,6 +11,9 @@ RUN mvn clean package -e -DskipTests
 RUN ls
 FROM eclipse-temurin:17-jre-alpine
 
+RUN mkdir /root/creds
+COPY ./credentials.json /root/creds/credentials.json
+
 WORKDIR /app
 
 COPY --from=build /app/target/app.jar .
