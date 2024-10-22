@@ -27,7 +27,7 @@ public class GoogleServiceAuthConfig {
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
 
     // Caminho para o arquivo de credenciais da conta de serviço
-    private static final String CREDENTIALS_FILE_PATH = System.getProperty("user.home") + "/creds/credentials.json";
+    private static final String CREDENTIALS_FILE_PATH = "/root/creds/credentials.json";
 
     // Escopos necessários para acessar o Google Calendar
     private static final List<String> SCOPES = Collections.singletonList(CalendarScopes.CALENDAR);
