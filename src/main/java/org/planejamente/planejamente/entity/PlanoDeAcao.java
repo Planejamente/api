@@ -17,7 +17,7 @@ public class PlanoDeAcao {
     @UuidGenerator
     private UUID id;
     private String tituloPlanoDeAcao;
-    @OneToMany
+    @OneToMany(mappedBy = "planoDeAcao", cascade = CascadeType.ALL)
     private List<PlanoDeAcaoTarefas> tarefas;
     @ManyToOne
     private Consulta consulta;
