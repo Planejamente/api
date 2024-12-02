@@ -51,6 +51,8 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST,"/blob/foto-de-fundo").hasRole("USER")
                         .requestMatchers(HttpMethod.POST,"/drive/subir-arquivo").hasRole("USER")
                         .requestMatchers(HttpMethod.POST,"/drive/download-arquivo").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/cloudnary/foto-de-perfil").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/cloudnary/foto-de-fundo").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
