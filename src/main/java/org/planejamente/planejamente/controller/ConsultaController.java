@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,7 +43,7 @@ public class ConsultaController {
     }
 
     @PostMapping
-    public ResponseEntity<ConsultaDtoConsultar> criar(@RequestBody @Valid ConsultaDto consultaDto) {
+    public ResponseEntity<ConsultaDtoConsultar> criar(@RequestBody @Valid ConsultaDto consultaDto) throws GeneralSecurityException, IOException {
         System.out.println(consultaDto);
 
         String accessToken = consultaDto.getAccessToken();
