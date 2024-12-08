@@ -53,7 +53,7 @@ public class PsicologoController extends UsuarioController<PsicologoDto> {
     @GetMapping
     public ResponseEntity<List<PsicologoDtoConsultar>> listar() {
         List<PsicologoDtoConsultar> lista = this.service.listarTodos();
-        return lista.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(lista);
+        return ResponseEntity.ok(lista);
     }
 
     @GetMapping("/{id}")

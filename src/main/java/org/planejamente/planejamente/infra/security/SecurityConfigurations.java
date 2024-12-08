@@ -39,6 +39,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/pacientes/csv").permitAll()
                         .requestMatchers(HttpMethod.POST, "/calendario/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/consultas").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/consultas/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/hello-bro").permitAll()
                         .requestMatchers(HttpMethod.POST, "/enderecos").permitAll()
                         .requestMatchers(HttpMethod.GET, "/enderecos/**").permitAll()
