@@ -96,8 +96,10 @@ public class CalendarService {
                 .setApplicationName("planejamentoCalendario")
                 .build();
 
+        String linkAnamneseString = consulta.getLinkAnamnese().isBlank() ? "" : "\n Link da anamnese: " + consulta.getLinkAnamnese();
+
         Event event = new Event()
-                .setSummary("Consulta com " + consulta.getPaciente().getNome())
+                .setSummary("Consulta com " + consulta.getPaciente().getNome() + linkAnamneseString)
                 .setStart(new EventDateTime()
                         .setDateTime(new com.google.api.client.util.DateTime(consulta.getInicio().toString()))
                         .setTimeZone("America/Los_Angeles"))

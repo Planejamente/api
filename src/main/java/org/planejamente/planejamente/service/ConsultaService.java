@@ -1,5 +1,6 @@
 package org.planejamente.planejamente.service;
 
+import org.planejamente.planejamente.configuration.Response;
 import org.planejamente.planejamente.dto.PsicologosDisponiveisDto;
 import org.planejamente.planejamente.dto.dtoConsultar.ConsultaDtoConsultar;
 import org.planejamente.planejamente.dto.dtoConsultar.PsicologoDtoConsultar;
@@ -17,6 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.File;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -33,17 +37,19 @@ public class ConsultaService {
     private final PacienteRepository pacienteRepository;
     private final PsicologoRepository psicologoRepository;
     private final CalendarService calendarService;
+    private final GoogleService googleService;
 
     @Autowired
-    public ConsultaService(ConsultaRepository consultaRepository, PacienteRepository pacienteRepository, PsicologoRepository psicologoRepository, CalendarService calendarService) {
+    public ConsultaService(ConsultaRepository consultaRepository, PacienteRepository pacienteRepository, PsicologoRepository psicologoRepository, CalendarService calendarService, GoogleService googleService) {
         this.consultaRepository = consultaRepository;
         this.pacienteRepository = pacienteRepository;
         this.psicologoRepository = psicologoRepository;
         this.calendarService = calendarService;
+        this.googleService = googleService;
     }
 
     // Método para criar uma nova consulta
-    public Consulta criar(ConsultaDto consultaDto, String accessToken, String calendarId) {
+    public Consulta criar(ConsultaDto consultaDto, String accessToken, String calendarId) throws GeneralSecurityException, IOException {
         UUID idPsi = consultaDto.getIdPsicologo();
         UUID idPac = consultaDto.getIdPaciente();
 
@@ -61,6 +67,14 @@ public class ConsultaService {
 
         consulta.setPsicologo(psicologo);
         consulta.setPaciente(paciente);
+
+        if(!psicologo.getIdAnamnese().isBlank()) {
+            File anamnese = this.googleService.downloadFileDrive(psicologo.getIdAnamnese());
+            Response copiaAnamnese = this.googleService.uploadFileDrive(anamnese, idPsi);
+
+            consulta.setIdAnamnese(copiaAnamnese.getId());
+            consulta.setLinkAnamnese(copiaAnamnese.getUrl());
+        }
 
         LocalDateTime inicio = consulta.getInicio();
         LocalDateTime fim = consulta.getFim();

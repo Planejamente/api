@@ -198,8 +198,8 @@ public class PsicologoService {
     public void salvarAnamenese(String linkAnamenese, String idAnamenese, UUID id) {
         Psicologo psicologo = this.repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Psicologo não encontrado"));
-        psicologo.setIdAnamnese(linkAnamenese);
-        psicologo.setLinkAnamnese(idAnamenese);
+        psicologo.setIdAnamnese(idAnamenese);
+        psicologo.setLinkAnamnese(linkAnamenese);
         this.repository.save(psicologo);
     }
 }
